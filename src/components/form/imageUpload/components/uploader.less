@@ -1,0 +1,82 @@
+// 以flex为主的全高度横向排列
+.flex-row-fh(@hei: auto) {
+  position: relative;
+  height: @hei;
+
+  &:before {
+    display: block;
+    content: ' ';
+    padding-bottom: 100%;
+  }
+
+  & > * {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translateY(-50%);
+  }
+}
+
+.lab {
+  .flex-row-fh();
+  position: relative;
+  border: 1px dashed #999;
+  background-color: #f9f9f9;
+  cursor: pointer;
+
+  .imgOuter {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .imgPlaceholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #666;
+    font-size: 20px;
+    color: #fff;
+  }
+  .noImg {
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+  }
+
+  .mask {
+    position: absolute;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .3);
+    color: #fff;
+    font-size: 36px;
+  }
+
+  &:hover {
+    .mask {
+      display: flex;
+    }
+  }
+}
+
+.uploader {
+  display: block;
+  widows: 100%;
+  :global(.ant-upload) {
+    display: block;
+    height: 100%;
+  }
+}
+.uploadBtn {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

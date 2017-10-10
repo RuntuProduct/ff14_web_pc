@@ -1,0 +1,75 @@
+@import "./default.less"; // antd-admin
+@dark-half: #494949;
+@purple: #d897eb;
+@shadow-1: 4px 4px 20px 0 rgba(0,0,0,0.01);
+@shadow-2: 4px 4px 40px 0 rgba(0,0,0,0.05);
+@transition-ease-in: all 0.3s ease-out;
+@transition-ease-out: all 0.3s ease-out;
+@ease-in: ease-in;
+
+.text-overflow {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.text-break() {
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+// 主题方案颜色的边框方案
+.bor(@dir: 1PX 1PX 1PX 1PX) {
+  border-width: @dir;
+  border-style: solid;
+  border-color: #fefefe;
+}
+
+// 无体积边框
+.bor-nowidth(@wid: 1PX) {
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: auto;
+    bottom: auto;
+    width: @wid;
+    height: 100%;
+    background-color: #fefefe;
+    display: block;
+  }
+}
+
+// 手机上流畅滚动
+.phone-scroll() {
+  -webkit-overflow-scrolling: touch;
+}
+
+// 滚动体
+.scroll-div() {
+  height: 100%;
+  overflow-y: auto;
+  .phone-scroll;
+}
+
+// 以flex为主的全高度横向排列
+.flex-row-fh(@hei: auto) {
+  position: relative;
+  height: @hei;
+
+  &:before {
+    display: block;
+    content: ' ';
+    padding-bottom: 100%;
+  }
+
+  & > * {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translateY(-50%);
+  }
+}
