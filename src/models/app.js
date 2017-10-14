@@ -22,7 +22,14 @@ export default {
     login: false,
     user: {},
     privilege: [],
-    permissions: ['/merchant', '/merchant/audit', '/merchant/review', '/setting/role', '/setting/user', '/setting/audit', '/setting/privilege', '/agent', '/agent/audit', '/agent/review', '/transaction/total', '/transaction/flow', '/statistic/merchant', '/statistic/agent', '/statistic/contrast', '/statistic/remit', '/materials/qrcode', '/materials/board'],
+    permissions: [
+      '/merchant', '/merchant/audit', '/merchant/review',
+      '/setting/role', '/setting/user', '/setting/job', '/setting/privilege',
+      '/agent', '/agent/audit', '/agent/review',
+      '/transaction/total', '/transaction/flow',
+      '/statistic/merchant', '/statistic/agent', '/statistic/contrast', '/statistic/remit',
+      '/materials/qrcode', '/materials/board',
+    ],
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -38,7 +45,7 @@ export default {
       payload,
     }, { call, put, select }) {
       // 获取cookies
-      const uid = getCookieByString('token')
+      const uid = getCookieByString('uidSave')
       const { pathname, search } = location
       if (uid) {
         // 获取登录信息

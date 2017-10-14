@@ -6,8 +6,8 @@ const loginSent = {
 }
 
 const loginGet = {
-  id: 'rbacUserId',
-  name: 'username',
+  id: 'id',
+  name: 'name',
   privilege: {
     tar: 'privilege',
     map: [{

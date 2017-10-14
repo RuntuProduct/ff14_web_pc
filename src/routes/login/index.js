@@ -35,7 +35,7 @@ const Login = ({
       <form>
         <FormItem hasFeedback>
           {getFieldDecorator('username', {
-            initialValue: 'admin',
+            initialValue: 'runtu',
             rules: [
               {
                 required: true,
@@ -45,7 +45,7 @@ const Login = ({
         </FormItem>
         <FormItem hasFeedback>
           {getFieldDecorator('password', {
-            initialValue: '11111',
+            initialValue: '123456',
             rules: [
               {
                 required: true,

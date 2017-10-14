@@ -9,8 +9,9 @@ const { dealMap } = pubfuc
 export async function loginFuc(params) {
   params = dealMap(loginSent, params)
   const res = await request({
-    url: `${login}?${stringify(params)}`,
+    url: login,
     method: 'post',
+    data: params,
   })
   res.data = dealMap(loginGet, res.data)
   return res

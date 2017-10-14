@@ -1,21 +1,26 @@
-import { query, add, edit } from '@services/setting/audit'
+import { query, add, edit } from '@services/setting/job'
 // import { parse } from 'qs'
 import { config } from '@utils'
 
-const { defaultPage, defaultPageSize } = config
+const { defaultPage } = config
+const defaultPageSize = 20
 
 export default {
 
-  namespace: 'settingAudit',
+  namespace: 'job',
 
   state: {
     list: [],
     pagination: {
-      showSizeChanger: true,
+      // showSizeChanger: true,
       showTotal: total => `共 ${total} 条`,
       current: defaultPage,
       total: null,
     },
+
+    modalTitle: '',   // 弹窗标题
+    modalVisible: false,  // 添加、编辑弹窗显示状态
+    modalItem: null,  // 当前编辑对象
   },
 
   subscriptions: {
@@ -23,7 +28,7 @@ export default {
     setup({ dispatch, history }) {
       history.listen((location) => {
         // 进入路由，获取数据
-        if (location.pathname === '/setting/audit') {
+        if (location.pathname === '/setting/job') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -43,7 +48,7 @@ export default {
       const { page, pageSize } = payload
       const pageProps = {
         page: page || defaultPage,
-        pageSize: pageSize || defaultPageSize,
+        pageSize: defaultPageSize,
       }
       const { success, data, message } = yield call(query, {
         obj: payload,
@@ -75,7 +80,19 @@ export default {
         },
       }
     },
-    
+
+    // 显示弹窗
+    showModal(state, { payload }) {
+      const { title: modalTitle, obj: modalItem } = payload
+      return { ...state, modalItem, modalTitle, modalVisible: true }
+    },
+    // 关闭弹窗
+    hideModal(state) {
+      const modalItem = null
+      const modalTitle = null
+      return { ...state, modalTitle, modalItem, modalVisible: false }
+    },
+
   },
 
 }

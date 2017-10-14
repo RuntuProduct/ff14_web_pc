@@ -43,13 +43,13 @@ const Routers = function router({ history, app }) {
           },
         },
         {
-          // 系统管理 - 审核配置
-          path: 'setting/audit',
+          // 系统管理 - 职业配置
+          path: 'setting/job',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/setting/audit'))
-              cb(null, require('./routes/setting/audit'))
-            }, 'privilegeAudit')
+              registerModel(app, require('./models/setting/job'))
+              cb(null, require('./routes/setting/job'))
+            })
           },
         },
         {

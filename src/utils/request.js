@@ -7,6 +7,7 @@ import { baseURL } from './config'
 import { mock, fakeNet } from '../mock/setting.js'
 
 axios.defaults.baseURL = baseURL
+axios.defaults.withCredentials = true
 
 const fetch = (options) => {
   let {
@@ -21,7 +22,7 @@ const fetch = (options) => {
 
   const defaultHeader = {
     'X-Requested-With': 'XMLHttpRequest',
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': 'http://localhost:8014',
   }
 
   // 判断传参格式
@@ -83,16 +84,26 @@ const fetch = (options) => {
 }
 
 export default function request(options) {
-  if (mock) {
-    return fakeNet(options)
-  }
+  // if (mock) {
+  //   return fakeNet(options)
+  // }
   return fetch(options).then((response) => {
     const { statusText, status, data } = response
-    return {
-      success: true,
-      message: statusText,
-      status,
-      ...data,
+    const { code, data: realData, message } = data
+    if (code === 200) {
+      return {
+        success: true,
+        message,
+        status: code,
+        data: realData,
+      }
+    } else {
+      return {
+        success: false,
+        message,
+        status: code,
+        data: realData,
+      }
     }
   }).catch((error) => {
     const { response } = error
