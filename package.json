@@ -5,7 +5,7 @@
   "scripts": {
     "start": "set PORT=8014&&set BROWSER=none&&roadhog server",
     "dist": "node bin/app",
-    "build": "roadhog build --debug --analyze",
+    "build": "roadhog build --debug --analyze --watch",
     "precommit": "npm run lint",
     "ltest": "npm run eslint",
     "ntest:watch": "mochista --watch --compilers node_modules/roadhog/lib/test/compiler.js --require node_modules/roadhog/lib/test/setup.js --bail --recursive src/**/*.test.js",

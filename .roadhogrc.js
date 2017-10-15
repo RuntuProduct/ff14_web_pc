@@ -7,6 +7,7 @@ export default {
   "cssModulesExclude": [
     './src/styles/lib/animate.css'
   ],
+  "outputPath": '../ff14_web_server/dist',
   "autoprefixer": {
     "browsers": [
       "last 2 versions", "iOS >= 8", "Android >= 4"

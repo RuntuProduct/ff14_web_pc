@@ -32,7 +32,6 @@ export default {
         // TODO: 方便调试的改动，记得改回来
         yield put({ type: 'app/loginSuccess', payload: data })
         // 进入主页
-        console.log(2)
         const { url } = yield select(state => state.login)
         // yield put(routerRedux.replace('/'))
         yield put(routerRedux.replace(url))

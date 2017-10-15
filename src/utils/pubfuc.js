@@ -159,7 +159,7 @@ const delCookie = (name) => {
   exp.setTime(exp.getTime() - 1)
   const cval = getCookieByString(name)
   if (cval!=null) {
-    document.cookie = `${name}=${cval};expires=${exp.toGMTString()}`
+    document.cookie = `${name}=${cval};path:/;expires=${exp.toGMTString()}`
   }
 }
 

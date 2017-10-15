@@ -23,12 +23,7 @@ export default {
     user: {},
     privilege: [],
     permissions: [
-      '/merchant', '/merchant/audit', '/merchant/review',
-      '/setting/role', '/setting/user', '/setting/job', '/setting/privilege',
-      '/agent', '/agent/audit', '/agent/review',
-      '/transaction/total', '/transaction/flow',
-      '/statistic/merchant', '/statistic/agent', '/statistic/contrast', '/statistic/remit',
-      '/materials/qrcode', '/materials/board',
+      '/setting/job', '/setting/product',
     ],
   },
   subscriptions: {
@@ -119,7 +114,7 @@ export default {
     },
     // 退出登录
     *logout({}, { put }) {
-      delCookie('token')
+      delCookie('uidSave')
       yield put({ type: 'clearLogin' })
       yield put({ type: 'checkLogin' })
     },

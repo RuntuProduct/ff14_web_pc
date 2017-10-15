@@ -1,5 +1,18 @@
 import React from 'react'
-import { Input, Textarea, Select, DatePicker, Radio, Checkbox, ImageUpload, Cascader, Hidden, ViewItem } from '@components/form'
+import {
+  Input,
+  Textarea,
+  AutoComplete,
+  Select,
+  DatePicker,
+  Radio,
+  Checkbox,
+  ImageUpload,
+  ImageUploadItem,
+  Cascader,
+  Hidden,
+  ViewItem,
+} from '@components/form'
 import ImageViewer from '../toolsCon/imageViewer'
 
 const matchFuc = (data) => {
@@ -8,6 +21,8 @@ const matchFuc = (data) => {
     return <Input {...data} />
   } else if (fieldType === 'Textarea') {
     return <Textarea {...data} />
+  } else if (fieldType === 'AutoComplete') {
+    return <AutoComplete {...data} />
   } else if (fieldType === 'Select') {
     return <Select {...data} />
   } else if (fieldType === 'DatePicker') {
@@ -18,6 +33,8 @@ const matchFuc = (data) => {
     return <Checkbox {...data} />
   } else if (fieldType === 'ImageUpload') {
     return <ImageUpload {...data} />
+  } else if(fieldType === 'ImageUploadItem') {
+    return <ImageUploadItem {...data} />
   } else if (fieldType === 'Cascader') {
     return <Cascader {...data} />
   } else if (fieldType === 'Hidden') {

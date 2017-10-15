@@ -21,27 +21,27 @@ const Routers = function router({ history, app }) {
         }, 'index')
       },
       childRoutes: [
-        {
-          // 系统管理 - 角色管理
-          path: 'setting/role',
-          getComponent(nextState, cb) {
-            require.ensure([], (require) => {
-              registerModel(app, require('./models/setting/role'))
-              registerModel(app, require('./models/setting/privilege'))
-              cb(null, require('./routes/setting/role'))
-            }, 'role')
-          },
-        },
-        {
-          // 系统管理 - 权限配置
-          path: 'setting/privilege',
-          getComponent(nextState, cb) {
-            require.ensure([], (require) => {
-              registerModel(app, require('./models/setting/privilege'))
-              cb(null, require('./routes/setting/privilege'))
-            }, 'privilege')
-          },
-        },
+        // {
+        //   // 系统管理 - 角色管理
+        //   path: 'setting/role',
+        //   getComponent(nextState, cb) {
+        //     require.ensure([], (require) => {
+        //       registerModel(app, require('./models/setting/role'))
+        //       registerModel(app, require('./models/setting/privilege'))
+        //       cb(null, require('./routes/setting/role'))
+        //     }, 'role')
+        //   },
+        // },
+        // {
+        //   // 系统管理 - 权限配置
+        //   path: 'setting/privilege',
+        //   getComponent(nextState, cb) {
+        //     require.ensure([], (require) => {
+        //       registerModel(app, require('./models/setting/privilege'))
+        //       cb(null, require('./routes/setting/privilege'))
+        //     }, 'privilege')
+        //   },
+        // },
         {
           // 系统管理 - 职业配置
           path: 'setting/job',
@@ -53,15 +53,25 @@ const Routers = function router({ history, app }) {
           },
         },
         {
-          // 系统管理 - 用户管理
-          path: 'setting/user',
+          // 系统管理 - 作物配置
+          path: 'setting/product',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/setting/user'))
-              cb(null, require('./routes/setting/user'))
-            }, 'user')
+              registerModel(app, require('./models/setting/product'))
+              cb(null, require('./routes/setting/product'))
+            })
           },
         },
+        // {
+        //   // 系统管理 - 用户管理
+        //   path: 'setting/user',
+        //   getComponent(nextState, cb) {
+        //     require.ensure([], (require) => {
+        //       registerModel(app, require('./models/setting/user'))
+        //       cb(null, require('./routes/setting/user'))
+        //     }, 'user')
+        //   },
+        // },
         {
           // 登录
           path: 'login',
