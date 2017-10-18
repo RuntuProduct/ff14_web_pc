@@ -4,8 +4,8 @@ import { Menu, Icon } from 'antd'
 import styles from './menuTop.less'
 
 const MenuTop = ({
-  config: horizonMenuProps,
   data: menu,
+  ...horizonMenuProps
 }) => {
   return (
     <div className={styles.scrollMenu}>
@@ -13,16 +13,12 @@ const MenuTop = ({
         <div className={styles.scroll}>
           <Menu {...horizonMenuProps} className={styles.horMenu}>
             {menu.map((item) => {
-              if (item.bpid == 1) {
-                return (
-                  <Menu.Item key={item.id} style={{}}>
-                    {item.icon && <Icon type={item.icon} />}
-                    {item.name}
-                  </Menu.Item>
-                )
-              } else {
-                return null
-              }
+              return (
+                <Menu.Item key={item.id} style={{}}>
+                  {item.icon && <Icon type={item.icon} />}
+                  {item.name}
+                </Menu.Item>
+              )
             })}
           </Menu>
         </div>

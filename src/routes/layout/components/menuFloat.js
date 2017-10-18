@@ -1,44 +1,43 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link , routerRedux} from 'dva/router'
+import { Link, routerRedux } from 'dva/router'
 import { Menu, Icon } from 'antd'
 // import styles from '.'
 
 const { SubMenu, ItemGroup: MenuItemGroup } = Menu
 
-class MenuFloatCon extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-    };
-  }
-
-  render() {
-    const { config, data: menu } = this.props
-    return (
-      <Menu {...config}>
-        {menu.map(item => {
-          let tarid = item.id
-          if(item.bpid == 1){
-            return (
-              <SubMenu key={item.id} title={<span>{item.icon && <Icon type={item.icon} />}<span>{item.name}</span></span>}>
-                {menu.map(item => {
-                  if(item.bpid == tarid && item.mpid != -1){
-                    return (
-                      <Menu.Item key={item.id}>
-                        {item.icon && <Icon type={item.icon} />}
-                        {item.name}
-                      </Menu.Item>
-                    )
-                  }
-                })}
-              </SubMenu>
-            )
-          }
-        })}
-      </Menu>
-    );
-  }
+const MenuFloatCon = ({
+  config,
+  menu,
+}) => {
+  return (
+    <Menu {...config}>
+      {
+        menu.map((item) => {
+          const { childrens } = item
+          return (
+            <SubMenu
+              key={item.id}
+              title={
+                <span>{item.icon && <Icon type={item.icon} />}<span>{item.name}</span></span>
+              }
+            >
+              {
+                childrens.map((ch) => {
+                  return (
+                    <Menu.Item key={ch.id}>
+                      {ch.icon && <Icon type={ch.icon} />}
+                      {ch.name}
+                    </Menu.Item>
+                  )
+                })
+              }
+            </SubMenu>
+          )
+        })
+      }
+    </Menu>
+  )
 }
 
 MenuFloatCon.defaultProps = {
@@ -47,7 +46,7 @@ MenuFloatCon.defaultProps = {
 
 MenuFloatCon.propTypes = {
   config: PropTypes.object,
-  data: PropTypes.array,
+  menu: PropTypes.array,
 }
 
 export default MenuFloatCon

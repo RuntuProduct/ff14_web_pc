@@ -1,5 +1,14 @@
 import { loginFuc, checkFuc } from '@services/login'
 import { routerRedux } from 'dva/router'
+import { tree } from '../utils'
+
+// 获取菜单节点路由
+const getPathAry = (ary) => {
+  const menu = ary.filter((ar) => {
+    return ar.menu === '01'
+  })
+  return tree.dealTree(menu)
+}
 
 export default {
   namespace: 'login',
@@ -29,7 +38,11 @@ export default {
       const { pathname, search, ...newData } = payload
       const { success, message, data } = yield call(loginFuc, newData)
       if (success) {
-        // TODO: 方便调试的改动，记得改回来
+        // 获取为菜单节点的path
+        const { rbacPrivileges } = data
+        const menu = getPathAry(rbacPrivileges)
+        yield put({ type: 'page/saveMenu', payload: menu })
+        // 保存相关信息
         yield put({ type: 'app/loginSuccess', payload: data })
         // 进入主页
         const { url } = yield select(state => state.login)
@@ -46,7 +59,11 @@ export default {
       const { uid, pathname, search } = payload
       const { success, message, data } = yield call(checkFuc, { uid })
       if (success) {
-        // TODO: 方便调试的改动，记得改回来
+        // 获取为菜单节点的path
+        const { rbacPrivileges } = data
+        const menu = getPathAry(rbacPrivileges)
+        yield put({ type: 'page/saveMenu', payload: menu })
+        // 保存相关信息
         yield put({ type: 'app/loginSuccess', payload: data })
         // 进入主页
         yield put(routerRedux.push(`${pathname}${search}`))

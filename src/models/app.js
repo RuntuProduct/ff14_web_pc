@@ -16,15 +16,21 @@ const checkRoutes = (tar, ary) => {
   return false
 }
 
+// 遍历获取权限列表
+const mapPrivilege = (ary) => {
+  return ary.filter((ar) => {
+    return ar.menu == '01'
+  }).map((ar) => {
+    return ar.path
+  })
+}
+
 export default {
   namespace: 'app',
   state: {
     login: false,
     user: {},
     privilege: [],
-    permissions: [
-      '/setting/job', '/setting/product',
-    ],
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -78,8 +84,8 @@ export default {
       const { path, rpath, cb } = payload
       // console.log(path)
       // 进行权限检查
-      const { permissions } = yield select(state => state.app)
-      const per = checkRoutes(rpath, permissions)
+      const { privilege } = yield select(state => state.app)
+      const per = checkRoutes(rpath, privilege)
       if (per) {
         // 有权限进入此路由
         // 传参时带有path是路由跳转的情况，不带path是意外进入无权限路由的情况
@@ -99,8 +105,8 @@ export default {
       const { path, cb } = payload
       // console.log(path)
       // 进行权限检查
-      const { permissions } = yield select(state => state.app)
-      const per = checkRoutes(path, permissions)
+      const { privilege } = yield select(state => state.app)
+      const per = checkRoutes(path, privilege)
       if (per) {
         // 有权限进入此路由
         // 传参时带有path是路由跳转的情况，不带path是意外进入无权限路由的情况
@@ -121,12 +127,14 @@ export default {
   },
   reducers: {
     // 登录成功，保存登录之后传来的数据
-    loginSuccess(state, { payload: user }) {
+    loginSuccess(state, { payload }) {
       const login = true
+      const { user, rbacPrivileges } = payload
       return {
         ...state,
         login,
         user,
+        privilege: mapPrivilege(rbacPrivileges),
       }
     },
     // 清除登录状态

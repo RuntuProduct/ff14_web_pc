@@ -6,17 +6,22 @@ const loginSent = {
 }
 
 const loginGet = {
-  id: 'id',
-  name: 'name',
-  privilege: {
-    tar: 'privilege',
-    map: [{
+  user: {
+    tar: 'user',
+    map: {
       id: 'id',
       name: 'name',
+    },
+  },
+  rbacPrivileges: {
+    tar: 'rbacPrivileges',
+    map: [{
+      id: 'privilegeId',
       menu: 'menu',
+      level: 'levelId',
       path: 'path',
-      level: 'level',
-      status: 'status',
+      name: 'privilegeName',
+      remark: 'remark',
     }],
   },
 }
