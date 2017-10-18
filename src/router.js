@@ -62,6 +62,16 @@ const Routers = function router({ history, app }) {
             })
           },
         },
+        {
+          // 系统管理 - 材料配置
+          path: 'setting/material',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/setting/material'))
+              cb(null, require('./routes/setting/material'))
+            })
+          },
+        },
         // {
         //   // 系统管理 - 用户管理
         //   path: 'setting/user',

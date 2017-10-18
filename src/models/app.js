@@ -23,7 +23,7 @@ export default {
     user: {},
     privilege: [],
     permissions: [
-      '/setting/job', '/setting/product',
+      '/setting/job', '/setting/product', '/setting/material',
     ],
   },
   subscriptions: {
