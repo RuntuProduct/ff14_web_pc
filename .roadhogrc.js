@@ -5,12 +5,23 @@ export default {
   "entry": "./src/index.js",
   "theme": "./theme.config.js",
   "cssModulesExclude": [
-    './src/styles/lib/animate.css'
+    './src/styles/lib/animate.css',
+    './src/components/toolsCon/MultiCol/index.less'
   ],
   "outputPath": '../ff14_web_server/dist',
   "autoprefixer": {
     "browsers": [
       "last 2 versions", "iOS >= 8", "Android >= 4"
+    ]
+  },
+  "xdllPlugin": {
+    "exclude": [
+      "babel-runtime"
+    ],
+    "include": [
+      "dva/router",
+      "dva/saga",
+      "dva/fetch"
     ]
   },
   "extraBabelPlugins": [

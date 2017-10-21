@@ -13,6 +13,7 @@ const { Nor } = TableTab
 
 const MeterialIndexCon = ({
   material,
+  utils,
   loading,
 
   location,
@@ -22,12 +23,13 @@ const MeterialIndexCon = ({
     list,
     pagination,
 
-    jobQuery,
-
     modalTitle,
     modalVisible,
     modalItem,
   } = material
+  const {
+    jobQuery,
+  } = utils
 
   const btnProps = [
     {
@@ -94,16 +96,6 @@ const MeterialIndexCon = ({
       title: '生产职业',
       dataIndex: 'jobName',
       key: 'jobName',
-    },
-    {
-      title: '难度',
-      dataIndex: 'difficulty',
-      key: 'difficulty',
-    },
-    {
-      title: '耐久',
-      dataIndex: 'stamina',
-      key: 'stamina',
     },
     {
       title: '操作',
@@ -173,4 +165,12 @@ MeterialIndexCon.propTypes = {
   dispatch: PropTypes.func.isRequired,
 }
 
-export default connect(({ material, loading }) => ({ material, loading }))(MeterialIndexCon)
+export default connect(({
+  material,
+  utils,
+  loading,
+}) => ({
+  material,
+  utils,
+  loading,
+}))(MeterialIndexCon)

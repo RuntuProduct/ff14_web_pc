@@ -1,4 +1,5 @@
-import { query, add, edit, deleteNode, queryJob } from '@services/setting/product'
+import queryString from 'query-string'
+import { query, add, edit, deleteNode } from '@services/setting/product'
 import { message } from 'antd'
 // import { parse } from 'qs'
 import { config } from '@utils'
@@ -18,22 +19,25 @@ export default {
       current: defaultPage,
       total: null,
     },
-    jobQuery: [],
 
     modalTitle: '',   // 弹窗标题
     modalVisible: false,  // 添加、编辑弹窗显示状态
+    modalFVisible: false, // 配方编辑弹窗
     modalItem: null,  // 当前编辑对象
+
+    modalSelectVisible: false,  // 选择素材弹窗显示状态
   },
 
   subscriptions: {
 
     setup({ dispatch, history }) {
-      history.listen((location) => {
+      history.listen(({ pathname, search }) => {
         // 进入路由，获取数据
-        if (location.pathname === '/setting/product') {
+        if (pathname === '/setting/product') {
+          const query = queryString.parse(search)
           dispatch({
             type: 'query',
-            payload: location.query,
+            payload: query,
           })
         }
       })
@@ -119,19 +123,6 @@ export default {
         throw new Error(message)
       }
     },
-    // 检索职业列表
-    *jobQuery({
-      payload,
-    }, { put, call }) {
-      const value = payload
-      // 搜索职业
-      const { success, data, message } = yield call(queryJob, { value })
-      if (success) {
-        yield put({ type: 'queryJobSuccess', payload: data })
-      } else {
-        throw new Error(message)
-      }
-    },
 
   },
 
@@ -151,14 +142,6 @@ export default {
         },
       }
     },
-    // 获取职业搜索列表成功
-    queryJobSuccess(state, { payload }) {
-      const jobQuery = payload
-      return {
-        ...state,
-        jobQuery,
-      }
-    },
 
     // 显示弹窗
     showModal(state, { payload }) {
@@ -170,6 +153,30 @@ export default {
       const modalItem = null
       const modalTitle = null
       return { ...state, modalTitle, modalItem, modalVisible: false }
+    },
+
+    // 显示配方编辑弹窗
+    showModalF(state, { payload }) {
+      const { title: modalTitle, obj: modalItem } = payload
+      return { ...state, modalItem, modalTitle, modalFVisible: true }
+    },
+    // 隐藏配方编辑弹窗
+    hideModalF(state) {
+      const modalItem = null
+      const modalTitle = null
+      return { ...state, modalTitle, modalItem, modalFVisible: false }
+    },
+
+    // 显示配方编辑弹窗
+    showSelect(state, { payload }) {
+      const { title: modalTitle, obj: modalItem } = payload
+      return { ...state, modalItem, modalTitle, modalSelectVisible: true }
+    },
+    // 隐藏配方编辑弹窗
+    hideSelect(state) {
+      const modalItem = null
+      const modalTitle = null
+      return { ...state, modalTitle, modalItem, modalSelectVisible: false }
     },
 
   },

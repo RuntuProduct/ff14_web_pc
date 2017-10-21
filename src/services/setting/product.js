@@ -3,7 +3,7 @@ import { stringify } from 'qs'
 import { jobGet, jobAddSent, jobEditSent, jobDeleteSent } from '@maps/setting/product'
 
 const { api } = config
-const { product, jobQuery } = api
+const { product } = api
 const { dealMap } = pubfuc
 
 export async function query(params) {
@@ -46,16 +46,6 @@ export async function deleteNode(params) {
     url: `${product}`,
     method: 'delete',
     data: params,
-  })
-  return res
-}
-
-// 搜索职业
-export async function queryJob(params) {
-  console.log(params)
-  const res = await request({
-    url: `${jobQuery}?${stringify(params)}`,
-    method: 'get',
   })
   return res
 }

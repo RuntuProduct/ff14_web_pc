@@ -15,5 +15,6 @@ module.exports = {
     job: '/job',                    // 职业设置
     jobQuery: '/job/query',         // 搜索职业
     product: '/product',            // 作物设置
+    material: '/material',          // 材料设置
   },
 }

@@ -7,12 +7,15 @@ import { tools } from '@components'
 import { dealStrAry } from '@utils/pubfuc'
 // import les from '.'
 import ModalEdit from './components/modal'
+import ModalForm from './components/modalFormula'
+import ModalSelect from './components/modalSelect'
 
 const { BtnLab, TableTab, Table } = tools
 const { Nor } = TableTab
 
 const ProductIndexCon = ({
   product,
+  utils,
   loading,
 
   location,
@@ -22,12 +25,15 @@ const ProductIndexCon = ({
     list,
     pagination,
 
-    jobQuery,
-
     modalTitle,
     modalVisible,
+    modalFVisible,
     modalItem,
+    modalSelectVisible,
   } = product
+  const {
+    jobQuery,
+  } = utils
 
   const btnProps = [
     {
@@ -47,21 +53,24 @@ const ProductIndexCon = ({
       },
     }))
   }
-  // 提交表单
-  const dealSubmit = (params) => {
-    dispatch({
-      type: 'product/edit',
-      payload: params,
-    })
-  }
   // 显示弹窗
   const showModal = (title, obj) => {
     dispatch({
-      type: 'product/jobQuery',
+      type: 'utils/jobQuery',
       payload: '',
     })
     dispatch({
       type: 'product/showModal',
+      payload: {
+        title,
+        obj,
+      },
+    })
+  }
+  // 显示配方编辑弹窗
+  const showModalF = (title, obj) => {
+    dispatch({
+      type: 'product/showModalF',
       payload: {
         title,
         obj,
@@ -113,7 +122,9 @@ const ProductIndexCon = ({
           <span>
             <a onClick={() => showModal('编辑作物', record)}>编辑</a>
             <span className="ant-divider" />
-            <a onClick={() => dealDelete(record)}>删除</a>
+            <a onClick={() => showModalF('编辑配方', record)}>编辑配方</a>
+            {/* <span className="ant-divider" />
+            <a onClick={() => dealDelete(record)}>删除</a> */}
           </span>
         )
       },
@@ -128,28 +139,26 @@ const ProductIndexCon = ({
     onChange: onPageChange,
   }
 
-  // 弹窗点击取消
-  const onCancel = () => {
-    dispatch({
-      type: 'product/hideModal',
-    })
-  }
   const modalProps = {
     title: modalTitle,
-    // key: Date.parse(new Date()),
-    visible: true,
-    width: '400px',
-    wrapClassName: 'vertical-center-modal',
-    maskClosable: false,
-    confirmLoading: loading.effects['product/edit'],
-    // onOk,
-    onCancel,
-
     data: modalItem,
-    dealSubmit,
     jobQuery,
+    loading,
     dispatch,
   }
+  const modalFProps = {
+    title: modalTitle,
+    data: modalItem,
+    loading,
+    dispatch,
+  }
+  const modalSProps = {
+    title: '添加素材',
+    data: modalItem,
+    loading,
+    dispatch,
+  }
+
 
   return (
     <div>
@@ -161,6 +170,10 @@ const ProductIndexCon = ({
       <Table {...tableProps} />
       {/* 添加、编辑弹窗 */}
       {modalVisible && <ModalEdit {...modalProps} />}
+      {/* 配方编辑弹窗 */}
+      {modalFVisible && <ModalForm {...modalFProps} />}
+      {/* 素材搜索弹窗 */}
+      {modalSelectVisible && <ModalSelect {...modalSProps} />}
     </div>
   )
 }
@@ -173,4 +186,4 @@ ProductIndexCon.propTypes = {
   dispatch: PropTypes.func.isRequired,
 }
 
-export default connect(({ product, loading }) => ({ product, loading }))(ProductIndexCon)
+export default connect(({ product, utils, loading }) => ({ product, utils, loading }))(ProductIndexCon)

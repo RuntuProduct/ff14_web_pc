@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Row, Col, AutoComplete } from 'antd'
 import { tools } from '@components'
+import FormTable from './formulaTable'
 // import styles from '.'
 
 const { Modal, MyForm, MultiCol } = tools
@@ -11,7 +12,7 @@ const formCon = ({
   data = {},
   jobQuery,
   form,
-  dealSubmit,
+  loading,
   dispatch,
   ...modalProps
 }) => {
@@ -33,7 +34,11 @@ const formCon = ({
     form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
-        dealSubmit(values)
+        // 提交表单
+        dispatch({
+          type: 'product/edit',
+          payload: values,
+        })
       }
     })
   }
@@ -47,16 +52,6 @@ const formCon = ({
   const formData = [
     {
       fieldType: 'Hidden',
-      fieldName: '表单的编辑状态-add还是edit',
-      form,
-      valueName: 'editType',
-      options: {
-        initialValue: data['editType'],
-        rules: [],
-      },
-    },
-    {
-      fieldType: 'Hidden',
       fieldName: '编辑时该节点的id',
       form,
       valueName: 'id',
@@ -66,24 +61,13 @@ const formCon = ({
       },
     },
     {
-      fieldType: 'Input',
-      fieldName: '材料名称',
-      settings: {
-        placeholder: '材料名称',
-        clear: true,
-      },
-      form,
-      valueName: 'name',
-      options: {
-        initialValue: data['name'],
-        rules: [
-          { required: true, message: '材料名称不能为空' },
-        ],
-      },
+      fieldType: 'nor',
+      fieldName: '作物名称',
+      value: data['name'],
     },
     {
       fieldType: 'ImageUploadItem',
-      fieldName: '材料图标',
+      fieldName: '职业图标',
       settings: {
         length: 1,
         url: 'upload',
@@ -93,48 +77,71 @@ const formCon = ({
       options: {
         initialValue: data['img'],
         rules: [
-          { required: false, message: '请选择材料图标' },
+          { required: false, message: '请选择职业图标' },
         ],
       },
     },
     {
-      fieldType: 'AutoComplete',
+      fieldType: 'nor',
       fieldName: '生产职业',
-      settings: {
-        placeholder: '请选择',
-        allowClear: true,
-        dataSource: jobQuery.map(renderOption),
-        onSearch: v => handleJobSearch(v),
-      },
-      form,
-      valueName: 'jobId',
-      options: {
-        initialValue: data['jobId'] ? data['jobId'].toString() : null,
-        rules: [
-          { required: true, message: '生产职业为必选项' },
-        ],
-      },
+      value: 'jobName',
+    },
+    {
+      fieldType: 'nor',
+      fieldName: '难度',
+      value: data['difficulty'],
+    },
+    {
+      fieldType: 'nor',
+      fieldName: '耐久',
+      valueName: data['stamina'],
     },
   ]
 
 
-  const formProps = {
+  const formPropsP1 = {
     data,
     fields: formData,
     form,
+    layout: { span: 24 },
   }
 
   const sendProps = {
-    modalProps: {
-      ...modalProps,
-      onOk: handleSubmit,
+    ...modalProps,
+    visible: true,
+    width: '60%',
+    wrapClassName: 'vertical-center-modal',
+    maskClosable: true,
+    confirmLoading: loading.effects['product/edit'],
+
+    onOk: handleSubmit,
+    onCancel: () => {
+      dispatch({
+        type: 'product/hideModalF',
+      })
     },
     // body: <VerForm {...formProps} />,
   }
 
+  const MultiColPropsP1 = [
+    {
+      label: '作物信息',
+      childrens: <MyForm {...formPropsP1} />,
+    },
+  ]
+  const MultiColPropsP2 = [
+    {
+      label: '配方信息',
+      childrens: <FormTable />,
+    },
+  ]
+
   return (
-    <Modal {...sendProps}>
-      <MyForm {...formProps} />
+    <Modal modalProps={sendProps}>
+      <Row gutter={16}>
+        <Col span={10}><MultiCol data={MultiColPropsP1} /></Col>
+        <Col span={14}><MultiCol data={MultiColPropsP2} /></Col>
+      </Row>
     </Modal>
   )
 }

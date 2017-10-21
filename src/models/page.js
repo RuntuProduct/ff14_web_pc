@@ -90,13 +90,13 @@ export default {
   subscriptions: {
 
     setup({ dispatch, history }) {
-      history.listen((location) => {
+      history.listen(({ pathname, search }) => {
         // 检测页面路由
-        const match1 = pathToRegexp('/:path1').exec(location.pathname)
-        const match2 = pathToRegexp('/:path1/:path2').exec(location.pathname)
+        const match1 = pathToRegexp('/:path1').exec(pathname)
+        const match2 = pathToRegexp('/:path1/:path2').exec(pathname)
         const match = match1 || match2
         // console.log('match:', match)
-        if (match && location.pathname != '/login') {
+        if (match && pathname != '/login') {
           const router = match[0]
           if (router) {
             dispatch({ type: 'restoreRouter', router })

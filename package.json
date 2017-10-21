@@ -15,8 +15,9 @@
   },
   "dependencies": {
     "antd": "2.13.6",
-    "dva": "1.2.1",
+    "dva": "2.0.4",
     "dva-loading": "0.2.1",
+    "query-string": "5.0.0",
     "moment": "2.18.1",
     "react": "15.5.4",
     "react-copy-to-clipboard": "5.0.0",

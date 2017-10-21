@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Row, Col, AutoComplete } from 'antd'
 import { tools } from '@components'
+import FormTable from './formulaTable'
 // import styles from '.'
 
 const { Modal, MyForm, MultiCol } = tools
@@ -11,7 +12,7 @@ const formCon = ({
   data = {},
   jobQuery,
   form,
-  dealSubmit,
+  loading,
   dispatch,
   ...modalProps
 }) => {
@@ -33,13 +34,17 @@ const formCon = ({
     form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
-        dealSubmit(values)
+        // 提交表单
+        dispatch({
+          type: 'product/edit',
+          payload: values,
+        })
       }
     })
   }
   const handleJobSearch = (values) => {
     console.log(values)
-    dispatch({ type: 'product/jobQuery', payload: values })
+    dispatch({ type: 'utils/jobQuery', payload: values })
   }
   const renderOption = (da) => {
     return <Option key={da.id} label={da.name}>{da.name}</Option>
@@ -154,23 +159,46 @@ const formCon = ({
   ]
 
 
-  const formProps = {
+  const formPropsP1 = {
     data,
     fields: formData,
     form,
+    layout: { span: 24 },
   }
 
   const sendProps = {
-    modalProps: {
-      ...modalProps,
-      onOk: handleSubmit,
+    ...modalProps,
+    visible: true,
+    width: '400px',
+    wrapClassName: 'vertical-center-modal',
+    maskClosable: true,
+    confirmLoading: loading.effects['product/edit'],
+
+    onOk: handleSubmit,
+    onCancel: () => {
+      dispatch({
+        type: 'product/hideModal',
+      })
     },
     // body: <VerForm {...formProps} />,
   }
 
+  const MultiColPropsP1 = [
+    {
+      label: '作物信息',
+      childrens: <MyForm {...formPropsP1} />,
+    },
+  ]
+  const MultiColPropsP2 = [
+    {
+      label: '配方信息',
+      childrens: <FormTable />,
+    },
+  ]
+
   return (
-    <Modal {...sendProps}>
-      <MyForm {...formProps} />
+    <Modal modalProps={sendProps}>
+      <MultiCol data={MultiColPropsP1} />
     </Modal>
   )
 }

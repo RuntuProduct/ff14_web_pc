@@ -1,27 +1,23 @@
 // 格式 - 新键值名：从原始数据中取值的键值名
 
-const jobAddSent = {
+const materialAddSent = {
   name: 'name',
   img: 'img',
   jobId: 'jobId',
-  difficulty: 'difficulty',
-  stamina: 'stamina',
 }
 
-const jobEditSent = {
+const materialEditSent = {
   id: 'id',
   name: 'name',
   img: 'img',
   jobId: 'jobId',
-  difficulty: 'difficulty',
-  stamina: 'stamina',
 }
 
-const jobDeleteSent = {
+const materialDeleteSent = {
   id: 'id',
 }
 
-const jobGet = {
+const materialGet = {
   list: {
     tar: 'list',
     map: [{
@@ -30,8 +26,6 @@ const jobGet = {
       jobId: 'jobId',
       jobName: 'jobName',
       img: 'img',
-      difficulty: 'difficulty',
-      stamina: 'stamina',
     }],
   },
   current: 'current',
@@ -40,8 +34,8 @@ const jobGet = {
 }
 
 export default {
-  jobAddSent,
-  jobEditSent,
-  jobGet,
-  jobDeleteSent,
+  materialAddSent,
+  materialEditSent,
+  materialGet,
+  materialDeleteSent,
 }

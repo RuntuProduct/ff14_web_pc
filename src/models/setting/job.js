@@ -1,3 +1,4 @@
+import queryString from 'query-string'
 import { query, add, edit } from '@services/setting/job'
 // import { parse } from 'qs'
 import { config } from '@utils'
@@ -26,12 +27,13 @@ export default {
   subscriptions: {
 
     setup({ dispatch, history }) {
-      history.listen((location) => {
+      history.listen(({ pathname, search }) => {
         // 进入路由，获取数据
-        if (location.pathname === '/setting/job') {
+        if (pathname === '/setting/job') {
+          const query = queryString.parse(search)
           dispatch({
             type: 'query',
-            payload: location.query,
+            payload: query,
           })
         }
       })

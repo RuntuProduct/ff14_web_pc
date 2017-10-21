@@ -1,25 +1,25 @@
 import { request, config, pubfuc } from '@utils'
 import { stringify } from 'qs'
-import { jobGet, jobAddSent, jobEditSent, jobDeleteSent } from '@maps/setting/product'
+import { materialGet, materialAddSent, materialEditSent, materialDeleteSent } from '@maps/setting/product'
 
 const { api } = config
-const { product, jobQuery } = api
+const { material } = api
 const { dealMap } = pubfuc
 
 export async function query(params) {
   const res = await request({
-    url: `${product}?${stringify(params.pageProps)}`,
+    url: `${material}?${stringify(params.pageProps)}`,
     method: 'get',
   })
-  res.data = dealMap(jobGet, res.data)
+  res.data = dealMap(materialGet, res.data)
   return res
 }
 
 // 添加节点
 export async function add(params) {
-  params = dealMap(jobAddSent, params)
+  params = dealMap(materialAddSent, params)
   const res = await request({
-    url: `${product}`,
+    url: `${material}`,
     method: 'post',
     data: params,
   })
@@ -28,10 +28,10 @@ export async function add(params) {
 
 // 编辑节点
 export async function edit(params) {
-  params = dealMap(jobEditSent, params)
+  params = dealMap(materialEditSent, params)
   console.log(params)
   const res = await request({
-    url: `${product}`,
+    url: `${material}`,
     method: 'put',
     data: params,
   })
@@ -40,22 +40,12 @@ export async function edit(params) {
 
 // 编辑节点
 export async function deleteNode(params) {
-  params = dealMap(jobDeleteSent, params)
+  params = dealMap(materialDeleteSent, params)
   console.log(params)
   const res = await request({
-    url: `${product}`,
+    url: `${material}`,
     method: 'delete',
     data: params,
-  })
-  return res
-}
-
-// 搜索职业
-export async function queryJob(params) {
-  console.log(params)
-  const res = await request({
-    url: `${jobQuery}?${stringify(params)}`,
-    method: 'get',
   })
   return res
 }

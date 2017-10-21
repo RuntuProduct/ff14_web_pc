@@ -1,3 +1,4 @@
+import queryString from 'query-string'
 import { loginFuc, checkFuc } from '@services/login'
 import { routerRedux } from 'dva/router'
 import { tree } from '../utils'
@@ -18,12 +19,13 @@ export default {
 
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen((location) => {
+      return history.listen(({ pathname, search }) => {
         // 进入路由，获取数据
-        if (location.pathname === '/login') {
+        if (pathname === '/login') {
+          const query = queryString.parse(search)
           dispatch({
             type: 'saveFrom',
-            payload: location.query,
+            payload: query,
           })
         }
       })
