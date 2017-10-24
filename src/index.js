@@ -8,13 +8,16 @@ import 'moment/locale/zh-cn'
 import './index.html'
 import './index.css'
 import './styles/lib/animate.css'    // 引入全局样式动画库
+import { baseName } from './utils/config'
 
 moment.locale('zh-cn')
 const ERROR_MSG_DURATION = 3 // 3 秒
 
 // 1. Initialize
 const app = dva({
-  history: createHistory(),
+  history: createHistory({
+    basename: baseName,
+  }),
   onError(error) {
     console.error(error)
     message.error(error.message, ERROR_MSG_DURATION)

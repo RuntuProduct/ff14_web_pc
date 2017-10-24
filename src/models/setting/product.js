@@ -1,5 +1,6 @@
 import queryString from 'query-string'
 import { query, add, edit, deleteNode } from '@services/setting/product'
+import * as MAT from '@services/setting/material'
 import { message } from 'antd'
 // import { parse } from 'qs'
 import { config } from '@utils'
@@ -13,6 +14,7 @@ export default {
 
   state: {
     list: [],
+    listQuery: {},
     pagination: {
       // showSizeChanger: true,
       showTotal: total => `共 ${total} 条`,
@@ -26,6 +28,17 @@ export default {
     modalItem: null,  // 当前编辑对象
 
     modalSelectVisible: false,  // 选择素材弹窗显示状态
+    modalSelectType: '01',   // 搜索类型：01-材料、02-作物、03-鱼类
+    modalSelectVal: '',
+    modalSelectList: [],  // 搜索结果
+    modalSelectPage: {
+      showTotal: total => `共 ${total} 条`,
+      current: defaultPage,
+      total: null,
+    },
+
+    modalItemSetVisible: false, // 素材添加弹窗显示状态
+    modalItemSetItem: {}, // 素材添加对象
   },
 
   subscriptions: {
@@ -39,6 +52,7 @@ export default {
             type: 'query',
             payload: query,
           })
+          dispatch({ type: 'job/query', payload: {} })
         }
       })
     },
@@ -54,11 +68,11 @@ export default {
       const { page, pageSize } = payload
       const pageProps = {
         page: page || defaultPage,
-        pageSize: defaultPageSize,
+        pageSize: pageSize || defaultPageSize,
       }
       const { success, data, message } = yield call(query, {
-        obj: payload,
-        pageProps,
+        ...payload,
+        ...pageProps,
       })
       if (success) {
         console.log('target:', data)
@@ -123,6 +137,46 @@ export default {
         throw new Error(message)
       }
     },
+    // 搜索材料
+    *searchMat({
+      name, pageData,
+    }, { put, call }) {
+      const { page, pageSize } = pageData
+      const pageProps = {
+        page: page || defaultPage,
+        pageSize: pageSize || defaultPageSize,
+      }
+      const { success, data, message } = yield call(MAT.query, {
+        name,
+        ...pageProps,
+      })
+      if (success) {
+        // console.log('target:', data)
+        yield put({ type: 'querySelectSuccess', payload: data })
+      } else {
+        throw message
+      }
+    },
+    // 搜索作物
+    *searchPro({
+      name, pageData,
+    }, { put, call }) {
+      const { page, pageSize } = pageData
+      const pageProps = {
+        page: page || defaultPage,
+        pageSize: pageSize || defaultPageSize,
+      }
+      const { success, data, message } = yield call(query, {
+        name,
+        ...pageProps,
+      })
+      if (success) {
+        // console.log('target:', data)
+        yield put({ type: 'querySelectSuccess', payload: data })
+      } else {
+        throw message
+      }
+    },
 
   },
 
@@ -140,6 +194,28 @@ export default {
           pageSize,
           total,
         },
+      }
+    },
+
+    // 搜索取值成功
+    querySelectSuccess(state, { payload }) {
+      const { list, current, pageSize, total } = payload
+      return {
+        ...state,
+        modalSelectList: list,  // 搜索结果
+        modalSelectPage: {
+          ...state.modalSelectPage,
+          current,
+          pageSize,
+          total,
+        },
+      }
+    },
+    // 保存搜索关键字
+    saveSelectVal(state, { payload }) {
+      return {
+        ...state,
+        modalSelectType: payload,
       }
     },
 
@@ -169,14 +245,25 @@ export default {
 
     // 显示配方编辑弹窗
     showSelect(state, { payload }) {
-      const { title: modalTitle, obj: modalItem } = payload
-      return { ...state, modalItem, modalTitle, modalSelectVisible: true }
+      return { ...state, modalSelectVisible: true }
     },
     // 隐藏配方编辑弹窗
     hideSelect(state) {
-      const modalItem = null
-      const modalTitle = null
-      return { ...state, modalTitle, modalItem, modalSelectVisible: false }
+      return { ...state, modalSelectVisible: false }
+    },
+
+    // 显示配方编辑弹窗
+    showSet(state, { obj }) {
+      return { ...state, modalItemSetVisible: true, modalItemSetItem: obj }
+    },
+    // 隐藏配方编辑弹窗
+    hideSet(state) {
+      return { ...state, modalItemSetVisible: false, modalItemSetItem: {} }
+    },
+
+    // 保存query
+    saveQuery(state, { query }) {
+      return { ...state, listQuery: query }
     },
 
   },

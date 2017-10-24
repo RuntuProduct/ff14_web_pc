@@ -9,7 +9,7 @@ const { Modal, MyForm, MultiCol } = tools
 const formCon = ({
   data = {},
   form,
-  dealSubmit,
+  dispatch,
   ...modalProps
 }) => {
   const {
@@ -22,7 +22,7 @@ const formCon = ({
     form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
-        dealSubmit(values)
+        // dispatch({ type: '', values})
       }
     })
   }
@@ -92,24 +92,20 @@ const formCon = ({
       },
     },
     {
-      fieldType: 'ImageUpload',
-      fieldName: '职业图标',
+      fieldType: 'ImageUploadItem',
+      fieldName: '材料图标',
       settings: {
-        placeholder: '',
-        clear: true,
+        length: 1,
+        url: 'upload',
       },
       form,
       valueName: 'img',
-      mapRules: {
-        type: 'single',
-      },
       options: {
-        initialValue: data['img'],
+        initialValue: [{ url: data['img'] }],
         rules: [
-          { required: true, message: '请选择职业图标' },
+          { required: false, message: '请选择材料图标' },
         ],
       },
-      cols: { xs: 8, sm: 6 },
     },
   ]
 

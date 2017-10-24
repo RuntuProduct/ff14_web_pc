@@ -4,8 +4,12 @@ import { Button, Table } from 'antd'
 import les from './formulaTable.less'
 
 const FormulaTable = ({
-  // data,
+  dispatch,
 }) => {
+  const dealClick = () => {
+    dispatch({ type: 'product/showSelect' })
+    dispatch({ type: 'product/searchMat', name: '', pageData: {} })
+  }
   const columns = [
     {
       title: '素材名称',
@@ -36,7 +40,7 @@ const FormulaTable = ({
   return (
     <div>
       <div className={les.btnLab}>
-        <Button type="primary" size="large">添加素材</Button>
+        <Button type="primary" size="large" onClick={dealClick}>添加素材</Button>
       </div>
       <Table {...tableProps} />
     </div>
@@ -48,7 +52,7 @@ FormulaTable.defaultProps = {
 }
 
 FormulaTable.propTypes = {
-  // dealMenuClick: PropTypes.bool,
+  dispatch: PropTypes.func.isRequired,
 }
 
 export default FormulaTable

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Select } from 'antd'
-// import styles from '.'
+import styles from './index.less'
 
 const FormItem = Form.Item
 const Option = Select.Option
@@ -52,7 +52,12 @@ class SelectCon extends React.Component {
             {
               son.map((so, idx) => {
                 return (
-                  <Option value={'' + so.value} key={idx}>{so.label}</Option>
+                  <Option value={'' + so.value} key={idx}>
+                    <span className={styles.outer}>
+                      {so.img && <img className={styles.img} src={so.img} alt="img" />}
+                      <span className={styles.label}>{so.label}</span>
+                    </span>
+                  </Option>
                 )
               })
             }

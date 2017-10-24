@@ -13,6 +13,7 @@ export default {
 
   state: {
     list: [],
+    listQuery: {},
     pagination: {
       // showSizeChanger: true,
       showTotal: total => `共 ${total} 条`,
@@ -36,6 +37,8 @@ export default {
             type: 'query',
             payload: query,
           })
+          dispatch({ type: 'job/query', payload: {} })
+          dispatch({ type: 'saveQuery', query })
         }
       })
     },
@@ -51,11 +54,11 @@ export default {
       const { page, pageSize } = payload
       const pageProps = {
         page: page || defaultPage,
-        pageSize: defaultPageSize,
+        pageSize: pageSize || defaultPageSize,
       }
       const { success, data, message } = yield call(query, {
-        obj: payload,
-        pageProps,
+        ...payload,
+        ...pageProps,
       })
       if (success) {
         console.log('target:', data)
@@ -150,6 +153,11 @@ export default {
       const modalItem = null
       const modalTitle = null
       return { ...state, modalTitle, modalItem, modalVisible: false }
+    },
+
+    // 保存query
+    saveQuery(state, { query }) {
+      return { ...state, listQuery: query }
     },
 
   },

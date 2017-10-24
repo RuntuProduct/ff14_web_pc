@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Row, Col, AutoComplete } from 'antd'
 import { tools } from '@components'
-import FormTable from './formulaTable'
 // import styles from '.'
 
 const { Modal, MyForm, MultiCol } = tools
@@ -187,12 +186,6 @@ const formCon = ({
     {
       label: '作物信息',
       childrens: <MyForm {...formPropsP1} />,
-    },
-  ]
-  const MultiColPropsP2 = [
-    {
-      label: '配方信息',
-      childrens: <FormTable />,
     },
   ]
 

@@ -5,11 +5,14 @@ import { routerRedux } from 'dva/router'
 import { Button, Modal } from 'antd'
 import { tools } from '@components'
 import { dealStrAry } from '@utils/pubfuc'
+import { imgs } from '@utils/config'
 // import les from '.'
 import ModalEdit from './components/modal'
+import SearchArea from './components/search'
 
 const { BtnLab, TableTab, Table } = tools
 const { Nor } = TableTab
+const { mining, quarrying, logging, harvesting } = imgs
 
 const MeterialIndexCon = ({
   material,
@@ -21,6 +24,7 @@ const MeterialIndexCon = ({
 }) => {
   const {
     list,
+    listQuery,
     pagination,
 
     modalTitle,
@@ -30,6 +34,12 @@ const MeterialIndexCon = ({
   const {
     jobQuery,
   } = utils
+
+  const searchProps = {
+    location,
+    dispatch,
+    query: listQuery,
+  }
 
   const btnProps = [
     {
@@ -58,10 +68,7 @@ const MeterialIndexCon = ({
   }
   // 显示弹窗
   const showModal = (title, obj) => {
-    dispatch({
-      type: 'material/jobQuery',
-      payload: '',
-    })
+    dispatch({ type: 'utils/jobQuery', payload: '' })
     dispatch({
       type: 'material/showModal',
       payload: {
@@ -69,6 +76,19 @@ const MeterialIndexCon = ({
         obj,
       },
     })
+  }
+  const renderIcon = (re) => {
+    if (re === '01') {
+      return <img src={mining} alt="挖掘" />
+    } else if (re === '02') {
+      return <img src={quarrying} alt="碎石" />
+    } else if (re === '03') {
+      return <img src={logging} alt="采伐" />
+    } else if (re === '04') {
+      return <img src={harvesting} alt="割草" />
+    } else {
+      return <span>无</span>
+    }
   }
   // 删除材料
   const dealDelete = (record) => {
@@ -88,14 +108,20 @@ const MeterialIndexCon = ({
   }
   const columns = [
     {
-      title: '材料名称',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
       title: '生产职业',
       dataIndex: 'jobName',
       key: 'jobName',
+    },
+    {
+      title: '采集类型',
+      dataIndex: 'getType',
+      key: 'getType',
+      render: re => renderIcon(re),
+    },
+    {
+      title: '材料名称',
+      dataIndex: 'name',
+      key: 'name',
     },
     {
       title: '操作',
@@ -130,7 +156,7 @@ const MeterialIndexCon = ({
     title: modalTitle,
     // key: Date.parse(new Date()),
     visible: true,
-    width: '400px',
+    width: '500px',
     wrapClassName: 'vertical-center-modal',
     maskClosable: false,
     confirmLoading: loading.effects['material/edit'],
@@ -145,6 +171,7 @@ const MeterialIndexCon = ({
 
   return (
     <div>
+      <SearchArea {...searchProps} />
       <BtnLab data={btnProps} />
       <TableTab content={
         (<span>共搜索到<Nor content={pagination.total} />条数据</span>)

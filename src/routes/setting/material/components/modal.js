@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 import { Form, Row, Col, AutoComplete } from 'antd'
 import { tools } from '@components'
 // import styles from '.'
+import { imgs } from '@utils/config'
 
 const { Modal, MyForm, MultiCol } = tools
 const Option = AutoComplete.Option
+const { mining, quarrying, logging, harvesting } = imgs
 
 const formCon = ({
   data = {},
@@ -98,22 +100,45 @@ const formCon = ({
       },
     },
     {
-      fieldType: 'AutoComplete',
-      fieldName: '生产职业',
+      fieldType: data['editType'] === 'add' ? 'Hidden' : 'AutoComplete',
+      fieldName: '所属生产职业',
       settings: {
         placeholder: '请选择',
         allowClear: true,
+        readonly: true,
+        disabled: true,
         dataSource: jobQuery.map(renderOption),
-        onSearch: v => handleJobSearch(v),
+        // onSearch: v => handleJobSearch(v),
       },
       form,
       valueName: 'jobId',
       options: {
         initialValue: data['jobId'] ? data['jobId'].toString() : null,
         rules: [
+          { required: false, message: '生产职业为必选项' },
+        ],
+      },
+    },
+    {
+      fieldType: 'Radio',
+      fieldName: '采集类型',
+      settings: {
+        placeholder: '请选择',
+      },
+      form,
+      valueName: 'getType',
+      options: {
+        initialValue: data['getType'],
+        rules: [
           { required: true, message: '生产职业为必选项' },
         ],
       },
+      son: [
+        { label: '挖掘', value: '01', img: mining },
+        { label: '碎石', value: '02', img: quarrying },
+        { label: '采伐', value: '03', img: logging },
+        { label: '割草', value: '04', img: harvesting },
+      ],
     },
   ]
 

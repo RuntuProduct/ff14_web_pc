@@ -28,7 +28,6 @@ const formCon = ({
   }
   console.log(data)
 
-  // console.log(data)
   const handleSubmit = () => {
     console.log(form.getFieldsValue())
     form.validateFields((err, values) => {
@@ -42,13 +41,23 @@ const formCon = ({
       }
     })
   }
-  const handleJobSearch = (values) => {
-    console.log(values)
-    dispatch({ type: 'utils/jobQuery', payload: values })
+  const sendProps = {
+    ...modalProps,
+    visible: true,
+    width: '60%',
+    wrapClassName: 'vertical-center-modal',
+    maskClosable: true,
+    confirmLoading: loading.effects['product/edit'],
+
+    onOk: handleSubmit,
+    onCancel: () => {
+      dispatch({
+        type: 'product/hideModalF',
+      })
+    },
+    // body: <VerForm {...formProps} />,
   }
-  const renderOption = (da) => {
-    return <Option key={da.id} label={da.name}>{da.name}</Option>
-  }
+
   const formData = [
     {
       fieldType: 'Hidden',
@@ -105,24 +114,9 @@ const formCon = ({
     form,
     layout: { span: 24 },
   }
-
-  const sendProps = {
-    ...modalProps,
-    visible: true,
-    width: '60%',
-    wrapClassName: 'vertical-center-modal',
-    maskClosable: true,
-    confirmLoading: loading.effects['product/edit'],
-
-    onOk: handleSubmit,
-    onCancel: () => {
-      dispatch({
-        type: 'product/hideModalF',
-      })
-    },
-    // body: <VerForm {...formProps} />,
+  const tablePropsP1 = {
+    dispatch,
   }
-
   const MultiColPropsP1 = [
     {
       label: '作物信息',
@@ -132,7 +126,7 @@ const formCon = ({
   const MultiColPropsP2 = [
     {
       label: '配方信息',
-      childrens: <FormTable />,
+      childrens: <FormTable {...tablePropsP1} />,
     },
   ]
 

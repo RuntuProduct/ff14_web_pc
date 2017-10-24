@@ -55,10 +55,11 @@ class UploadCon extends React.Component {
   render() {
     const { length, url } = this.props
     const { previewVisible, previewImage, value } = this.state
-    const fileList = value.map((da) => {
+    const fileList = value.map((da, idx) => {
       if (imgBaseURL && da.url) {
         return {
           ...da,
+          uid: `uploader-${idx}`,
           url: `${imgBaseURL}${da.url}`,
         }
       }

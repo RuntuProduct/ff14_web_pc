@@ -5,7 +5,8 @@ import { routerRedux } from 'dva/router'
 import { Button } from 'antd'
 import { tools } from '@components'
 import { dealStrAry } from '@utils/pubfuc'
-// import les from '.'
+import { imgBaseURL } from '@utils/config'
+import les from './index.less'
 import ModalEdit from './components/modal'
 
 const { BtnLab, TableTab, Table } = tools
@@ -66,8 +67,17 @@ const JobIndexCon = ({
     },
     {
       title: '职业名称',
-      dataIndex: 'name',
+      // dataIndex: 'name',
       key: 'name',
+      render: (record) => {
+        const { name, img } = record
+        return (
+          <div>
+            <img className={les.img} src={`${imgBaseURL}${img}`} alt={name} />
+            <span>{name}</span>
+          </div>
+        )
+      },
     },
     {
       title: '操作',
@@ -106,12 +116,13 @@ const JobIndexCon = ({
     onCancel,
 
     data: modalItem,
+    dispatch,
     // dealSubmit,
   }
 
   return (
     <div>
-      <BtnLab data={btnProps} />
+      {/* <BtnLab data={btnProps} /> */}
       <TableTab content={
         (<span>共搜索到<Nor content={pagination.total} />条数据</span>)
       }

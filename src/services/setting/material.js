@@ -8,7 +8,7 @@ const { dealMap } = pubfuc
 
 export async function query(params) {
   const res = await request({
-    url: `${material}?${stringify(params.pageProps)}`,
+    url: `${material}?${stringify(params)}`,
     method: 'get',
   })
   res.data = dealMap(materialGet, res.data)

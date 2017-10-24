@@ -1,3 +1,5 @@
+import { routerRedux } from 'dva/router'
+import queryString from 'query-string'
 import { queryJob } from '@services/utils'
 
 export default {
@@ -19,6 +21,16 @@ export default {
       } else {
         throw new Error(message)
       }
+    },
+    // 全局搜索函数（通过url）
+    *search({
+      pathname,
+      values,
+    }, { put }) {
+      yield put(routerRedux.push({
+        pathname,
+        search: queryString.stringify(values),
+      }))
     },
   },
   reducers: {

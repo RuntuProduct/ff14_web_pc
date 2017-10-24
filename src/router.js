@@ -1,9 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Router, Switch, Route } from 'dva/router'
+import { BrowserRouter, Router, Switch, Route, routerRedux } from 'dva/router'
 import dynamic from 'dva/dynamic'
+import { baseName } from './utils/config'
 
-// 在此文件添加路由之后还需在 @utils/router中添加对应的路由及权限
+const { ConnectedRouter } = routerRedux
+
+// 路由处理及生成
 const Routers = function router({ history, app }) {
   // 根据路由结构遍历生成路由节点树
   const mapRoutes = (ary, parent) => {
@@ -98,6 +101,7 @@ const Routers = function router({ history, app }) {
           component: dynamic({
             app,
             models: () => [
+              import('./models/setting/job'),
               import('./models/setting/product'),
             ],
             component: () => import('./routes/setting/product'),
@@ -109,6 +113,7 @@ const Routers = function router({ history, app }) {
           component: dynamic({
             app,
             models: () => [
+              import('./models/setting/job'),
               import('./models/setting/material'),
             ],
             component: () => import('./routes/setting/material'),
@@ -120,9 +125,13 @@ const Routers = function router({ history, app }) {
 
   // return <Router history={history} routes={routes} />
   return (
-    <Router history={history}>
-      {mapRoutes(routeData)}
-    </Router>
+    <ConnectedRouter history={history}>
+      <BrowserRouter basename={baseName}>
+        <Router history={history}>
+          {mapRoutes(routeData)}
+        </Router>
+      </BrowserRouter>
+    </ConnectedRouter>
   )
 }
 

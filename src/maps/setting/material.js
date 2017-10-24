@@ -3,14 +3,14 @@
 const materialAddSent = {
   name: 'name',
   img: 'img',
-  jobId: 'jobId',
+  getType: 'getType',
 }
 
 const materialEditSent = {
   id: 'id',
   name: 'name',
   img: 'img',
-  jobId: 'jobId',
+  getType: 'getType',
 }
 
 const materialDeleteSent = {
@@ -23,9 +23,10 @@ const materialGet = {
     map: [{
       id: 'id',
       name: 'name',
+      img: 'img',
       jobId: 'jobId',
       jobName: 'jobName',
-      img: 'img',
+      getType: 'getType',
     }],
   },
   current: 'current',

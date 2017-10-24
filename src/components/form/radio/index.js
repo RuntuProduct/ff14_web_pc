@@ -50,8 +50,11 @@ class RadioCon extends React.Component {
                   son.map((so, idx) => {
                     return (
                       <Tooltip key={idx} placement={so.placement || 'top'} title={so.tips}>
-                        <RadioButton value={so.value}>
-                          {so.label}
+                        <RadioButton value={so.value} className={so.img ? styles.imgRadio : ''}>
+                          <span className={styles.outer}>
+                            {so.img && <img className={styles.img} src={so.img} alt="img" />}
+                            <span className={styles.label}>{so.label}</span>
+                          </span>
                         </RadioButton>
                       </Tooltip>
                     )
@@ -67,6 +70,7 @@ class RadioCon extends React.Component {
 }
 
 RadioCon.defaultProps = {
+  settings: {},
   layout: {
     labelCol: { span: 7 },
     wrapperCol: { span: 17 },

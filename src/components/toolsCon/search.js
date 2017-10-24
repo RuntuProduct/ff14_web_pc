@@ -37,10 +37,10 @@ class MineAccordion extends React.Component {
   }
 
   handleReset = () => {
+    const { location, dispatch } = this.props
+    const { pathname } = location
     this.props.form.resetFields()
-    this.props.form.validateFields((err, values) => {
-      console.log('Received values of form: ', values)
-    })
+    dispatch({ type: 'utils/search', pathname, values: {} })
   }
 
   toggle = () => {
@@ -56,9 +56,20 @@ class MineAccordion extends React.Component {
   }
 
   handleSubmit = (e) => {
-    const { form, onChange } = this.props
+    const { form, onChange, delNull } = this.props
     form.validateFields((err, values) => {
       if (!err) {
+        // 如果delNull 为空，删除返回表单中为空的字段
+        if (delNull) {
+          const keys = Object.keys(values)
+          for (let i = 0; i < keys.length; i += 1) {
+            const target = values[keys[i]]
+            if (!target) {
+              // 判断空值
+              delete values[keys[i]]
+            }
+          }
+        }
         // 数据格式处理
         onChange(values)
       }
@@ -122,10 +133,17 @@ class MineAccordion extends React.Component {
   }
 }
 
+MineAccordion.defaultProps = {
+  delNull: true,
+}
+
 MineAccordion.propTypes = {
+  location: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
   form: PropTypes.object.isRequired,
   data: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
+  delNull: PropTypes.bool,
 }
 
 export default MineAccordion

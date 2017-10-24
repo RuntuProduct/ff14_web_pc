@@ -9,12 +9,15 @@ import { dealStrAry } from '@utils/pubfuc'
 import ModalEdit from './components/modal'
 import ModalForm from './components/modalFormula'
 import ModalSelect from './components/modalSelect'
+import ModalItemSet from './components/modalSet'
+import SearchArea from './components/search'
 
 const { BtnLab, TableTab, Table } = tools
 const { Nor } = TableTab
 
 const ProductIndexCon = ({
   product,
+  job,
   utils,
   loading,
 
@@ -23,17 +26,35 @@ const ProductIndexCon = ({
 }) => {
   const {
     list,
+    listQuery,
     pagination,
 
     modalTitle,
     modalVisible,
     modalFVisible,
     modalItem,
+
     modalSelectVisible,
+    modalSelectType,
+    modalSelectList,
+    modalSelectPage,
+
+    modalItemSetVisible,
+    modalItemSetItem,
   } = product
+  const {
+    list: jobList,
+  } = job
   const {
     jobQuery,
   } = utils
+
+  const searchProps = {
+    jobList,
+    location,
+    dispatch,
+    query: listQuery,
+  }
 
   const btnProps = [
     {
@@ -155,6 +176,15 @@ const ProductIndexCon = ({
   const modalSProps = {
     title: '添加素材',
     data: modalItem,
+    modalSelectType,
+    modalSelectList,
+    modalSelectPage,
+    loading,
+    dispatch,
+  }
+  const modalSetProps = {
+    title: '添加素材',
+    data: modalItemSetItem,
     loading,
     dispatch,
   }
@@ -162,6 +192,7 @@ const ProductIndexCon = ({
 
   return (
     <div>
+      <SearchArea {...searchProps} />
       <BtnLab data={btnProps} />
       <TableTab content={
         (<span>共搜索到<Nor content={pagination.total} />条数据</span>)
@@ -174,6 +205,8 @@ const ProductIndexCon = ({
       {modalFVisible && <ModalForm {...modalFProps} />}
       {/* 素材搜索弹窗 */}
       {modalSelectVisible && <ModalSelect {...modalSProps} />}
+      {/* 素材添加弹窗 */}
+      {modalItemSetVisible && <ModalItemSet {...modalSetProps} />}
     </div>
   )
 }
@@ -186,4 +219,4 @@ ProductIndexCon.propTypes = {
   dispatch: PropTypes.func.isRequired,
 }
 
-export default connect(({ product, utils, loading }) => ({ product, utils, loading }))(ProductIndexCon)
+export default connect(({ product, job, utils, loading }) => ({ product, job, utils, loading }))(ProductIndexCon)

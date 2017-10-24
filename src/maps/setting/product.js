@@ -39,9 +39,19 @@ const jobGet = {
   total: 'total',
 }
 
+const merSend = {
+  name: 'name',
+}
+const merGet = {
+  // 
+}
+
 export default {
   jobAddSent,
   jobEditSent,
   jobGet,
   jobDeleteSent,
+
+  merSend,
+  merGet,
 }
