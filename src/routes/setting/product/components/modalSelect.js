@@ -135,13 +135,17 @@ const MdoalSelectCon = ({
     )
   }
 
-  return (
-    <Modal modalProps={sendProps}>
-      <Row gutter={16}>
-        <Col span={14}>
-          <Table {...tableShowProps} />
-        </Col>
-        <Col span={10}>
+  const formMultiProps = [
+    {
+      label: '现有配方',
+      className: les.left,
+      childrens: <Table {...tableShowProps} />,
+    },
+    {
+      label: '素材检索',
+      className: les.right,
+      childrens: (
+        <div>
           <div className={les.btnLab}>
             <div className={les.ipt}>
               <Input addonBefore={selectBefore()} placeholder={'材料名称/作物名称/鱼类名称'} />
@@ -149,8 +153,14 @@ const MdoalSelectCon = ({
             <Button className={les.btn} type="primary" size="large" onClick={dealSearch}>搜索</Button>
           </div>
           <Table {...tableProps} />
-        </Col>
-      </Row>
+        </div>
+      ),
+    },
+  ]
+
+  return (
+    <Modal modalProps={sendProps}>
+      <MultiCol data={formMultiProps} className="ant-row" />
     </Modal>
   )
 }
