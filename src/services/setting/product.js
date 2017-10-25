@@ -1,9 +1,9 @@
 import { request, config, pubfuc } from '@utils'
 import { stringify } from 'qs'
-import { jobGet, jobAddSent, jobEditSent, jobDeleteSent } from '@maps/setting/product'
+import { productGet, productAddSent, productEditSent, productDeleteSent, formulaSend } from '@maps/setting/product'
 
 const { api } = config
-const { product } = api
+const { product, formula } = api
 const { dealMap } = pubfuc
 
 export async function query(params) {
@@ -11,13 +11,13 @@ export async function query(params) {
     url: `${product}?${stringify(params)}`,
     method: 'get',
   })
-  res.data = dealMap(jobGet, res.data)
+  res.data = dealMap(productGet, res.data)
   return res
 }
 
 // 添加节点
 export async function add(params) {
-  params = dealMap(jobAddSent, params)
+  params = dealMap(productAddSent, params)
   const res = await request({
     url: `${product}`,
     method: 'post',
@@ -28,7 +28,7 @@ export async function add(params) {
 
 // 编辑节点
 export async function edit(params) {
-  params = dealMap(jobEditSent, params)
+  params = dealMap(productEditSent, params)
   console.log(params)
   const res = await request({
     url: `${product}`,
@@ -40,7 +40,7 @@ export async function edit(params) {
 
 // 编辑节点
 export async function deleteNode(params) {
-  params = dealMap(jobDeleteSent, params)
+  params = dealMap(productDeleteSent, params)
   console.log(params)
   const res = await request({
     url: `${product}`,
@@ -50,35 +50,12 @@ export async function deleteNode(params) {
   return res
 }
 
-// 搜索材料
-export async function searchMer(params) {
-  params = dealMap(jobDeleteSent, params)
-  console.log(params)
+// 添加配方
+export async function addFormula(params) {
+  params = dealMap(formulaSend, params)
   const res = await request({
-    url: `${product}`,
-    method: 'delete',
-    data: params,
-  })
-  return res
-}
-// 搜索作物
-export async function searchPro(params) {
-  params = dealMap(jobDeleteSent, params)
-  console.log(params)
-  const res = await request({
-    url: `${product}`,
-    method: 'delete',
-    data: params,
-  })
-  return res
-}
-// 搜索鱼类
-export async function searchFish(params) {
-  params = dealMap(jobDeleteSent, params)
-  console.log(params)
-  const res = await request({
-    url: `${product}`,
-    method: 'delete',
+    url: `${formula}`,
+    method: 'post',
     data: params,
   })
   return res

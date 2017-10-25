@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
 import { Form, Row, Col, AutoComplete } from 'antd'
 import { tools } from '@components'
 import FormTable from './formulaTable'
@@ -16,6 +17,7 @@ const formCon = ({
   dispatch,
   ...modalProps
 }) => {
+  data = _.cloneDeep(data)
   const {
     getFieldValue,
   } = form
@@ -97,13 +99,18 @@ const formCon = ({
     },
     {
       fieldType: 'nor',
+      fieldName: '等级',
+      value: data['level'],
+    },
+    {
+      fieldType: 'nor',
       fieldName: '难度',
       value: data['difficulty'],
     },
     {
       fieldType: 'nor',
       fieldName: '耐久',
-      valueName: data['stamina'],
+      value: data['stamina'],
     },
   ]
 
@@ -115,6 +122,7 @@ const formCon = ({
     layout: { span: 24 },
   }
   const tablePropsP1 = {
+    data,
     dispatch,
   }
   const MultiColPropsP1 = [

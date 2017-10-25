@@ -4,8 +4,12 @@ import { Button, Table } from 'antd'
 import les from './formulaTable.less'
 
 const FormulaTable = ({
+  data = {},
   dispatch,
 }) => {
+  // const {
+  //   id,
+  // } = data
   const dealClick = () => {
     dispatch({ type: 'product/showSelect' })
     dispatch({ type: 'product/searchMat', name: '', pageData: {} })

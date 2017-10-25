@@ -1,5 +1,5 @@
 import queryString from 'query-string'
-import { query, add, edit, deleteNode } from '@services/setting/product'
+import { query, add, edit, deleteNode, addFormula } from '@services/setting/product'
 import * as MAT from '@services/setting/material'
 import { message } from 'antd'
 // import { parse } from 'qs'
@@ -177,6 +177,26 @@ export default {
         throw message
       }
     },
+    // 添加素材
+    *addMat({
+      obj,
+    }, { put, call, select }) {
+      const { modalItem, modalItemSetItem, modalSelectType: tarType } = yield select(state => state.product)
+      const { id: pid } = modalItem
+      const { id: tarId } = modalItemSetItem
+      const { addNum: num } = obj
+      if (pid !== undefined && tarId !== undefined && tarType && parseInt(num, 10)) {
+        const { success, data, message } = yield call(addFormula, {
+          pid,
+          tarId,
+          tarType,
+          num,
+        })
+        console.log(data)
+      } else {
+        throw new Error('配方信息错误！')
+      }
+    },
 
   },
 
@@ -244,7 +264,7 @@ export default {
     },
 
     // 显示配方编辑弹窗
-    showSelect(state, { payload }) {
+    showSelect(state, { obj }) {
       return { ...state, modalSelectVisible: true }
     },
     // 隐藏配方编辑弹窗

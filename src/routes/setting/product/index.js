@@ -126,6 +126,11 @@ const ProductIndexCon = ({
       key: 'jobName',
     },
     {
+      title: '等级',
+      dataIndex: 'level',
+      key: 'level',
+    },
+    {
       title: '难度',
       dataIndex: 'difficulty',
       key: 'difficulty',

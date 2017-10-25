@@ -28,11 +28,17 @@ const Routers = function router({ history, app }) {
             path={path}
             exact={exact}
             render={
-              props => (
-                <Component {...props}>
-                  {mapRoutes(routes, { key, ...ary[i] })}
-                </Component>
-              )
+              (props) => {
+                if (Component) {
+                  return (
+                    <Component {...props}>
+                      {mapRoutes(routes, { key, ...ary[i] })}
+                    </Component>
+                  )
+                } else {
+                  return mapRoutes(routes, { key, ...ary[i] })
+                }
+              }
             }
           />,
         )
@@ -85,39 +91,90 @@ const Routers = function router({ history, app }) {
           }),
         },
         {
-          // 系统管理 - 职业配置
-          path: '/setting/job',
-          component: dynamic({
-            app,
-            models: () => [
-              import('./models/setting/job'),
-            ],
-            component: () => import('./routes/setting/job'),
-          }),
+          path: '/setting',
+          exact: false,
+          routes: [
+            {
+              // 系统管理 - 职业配置
+              path: '/setting/job',
+              component: dynamic({
+                app,
+                models: () => [
+                  import('./models/setting/job'),
+                ],
+                component: () => import('./routes/setting/job'),
+              }),
+            },
+            {
+              // 系统管理 - 作物配置
+              path: '/setting/product',
+              component: dynamic({
+                app,
+                models: () => [
+                  import('./models/setting/job'),
+                  import('./models/setting/product'),
+                ],
+                component: () => import('./routes/setting/product'),
+              }),
+            },
+            {
+              // 系统管理 - 材料配置
+              path: '/setting/material',
+              component: dynamic({
+                app,
+                models: () => [
+                  import('./models/setting/job'),
+                  import('./models/setting/material'),
+                ],
+                component: () => import('./routes/setting/material'),
+              }),
+            },
+            {
+              // 系统管理 - 鱼类配置
+              path: '/setting/fish',
+              component: dynamic({
+                app,
+                models: () => [
+                  import('./models/setting/fish'),
+                ],
+                component: () => import('./routes/setting/fish'),
+              }),
+            },
+          ],
         },
         {
-          // 系统管理 - 作物配置
-          path: '/setting/product',
-          component: dynamic({
-            app,
-            models: () => [
-              import('./models/setting/job'),
-              import('./models/setting/product'),
-            ],
-            component: () => import('./routes/setting/product'),
-          }),
-        },
-        {
-          // 系统管理 - 材料配置
-          path: '/setting/material',
-          component: dynamic({
-            app,
-            models: () => [
-              import('./models/setting/job'),
-              import('./models/setting/material'),
-            ],
-            component: () => import('./routes/setting/material'),
-          }),
+          // 各类笔记
+          path: '/notes',
+          exact: false,
+          routes: [
+            {
+              // 制作笔记
+              path: '/notes/product',
+              component: dynamic({
+                app,
+                models: () => [],
+                component: () => import('./routes/setting/job'),
+              }),
+            },
+            {
+              // 采集笔记
+              path: '/notes/gather',
+              component: dynamic({
+                app,
+                models: () => [],
+                component: () => import('./routes/setting/job'),
+              }),
+            },
+            {
+              // 钓鱼笔记
+              path: '/notes/fish',
+              component: dynamic({
+                app,
+                models: () => [],
+                component: () => import('./routes/setting/job'),
+              }),
+            },
+          ],
         },
       ],
     },

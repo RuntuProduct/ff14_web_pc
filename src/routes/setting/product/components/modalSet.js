@@ -20,6 +20,7 @@ const MdoalSelectCon = ({
     form.validateFields((err, values) => {
       if (!err) {
         console.log(values)
+        dispatch({ type: 'product/addMat', obj: values })
       }
     })
   }
@@ -33,8 +34,8 @@ const MdoalSelectCon = ({
     onCancel: dealCancel,
 
     footer: [
-      <Button type="" size="" key="cancel" onClick={dealCancel}>取消</Button>,
-      <Button type="primary" size="" key="ok" onClick={dealSubmit}>添加</Button>,
+      <Button type="" key="cancel" onClick={dealCancel}>取消</Button>,
+      <Button type="primary" key="ok" onClick={dealSubmit}>添加</Button>,
     ],
   }
 

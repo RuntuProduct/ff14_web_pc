@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
 import { Form, Row, Col, AutoComplete } from 'antd'
 import { tools } from '@components'
 // import styles from '.'
@@ -9,15 +10,12 @@ const Option = AutoComplete.Option
 
 const formCon = ({
   data = {},
-  jobQuery,
   form,
   loading,
   dispatch,
   ...modalProps
 }) => {
-  const {
-    getFieldValue,
-  } = form
+  data = _.cloneDeep(data)
   const { img } = data
   if (img && typeof img == 'string') {
     data.img = [{
@@ -35,18 +33,11 @@ const formCon = ({
         console.log('Received values of form: ', values)
         // 提交表单
         dispatch({
-          type: 'product/edit',
+          type: 'fish/edit',
           payload: values,
         })
       }
     })
-  }
-  const handleJobSearch = (values) => {
-    console.log(values)
-    dispatch({ type: 'utils/jobQuery', payload: values })
-  }
-  const renderOption = (da) => {
-    return <Option key={da.id} label={da.name}>{da.name}</Option>
   }
   const formData = [
     {
@@ -71,9 +62,9 @@ const formCon = ({
     },
     {
       fieldType: 'Input',
-      fieldName: '作物名称',
+      fieldName: '鱼类名称',
       settings: {
-        placeholder: '作物名称',
+        placeholder: '鱼类名称',
         clear: true,
       },
       form,
@@ -81,13 +72,13 @@ const formCon = ({
       options: {
         initialValue: data['name'],
         rules: [
-          { required: true, message: '作物名称不能为空' },
+          { required: true, message: '鱼类名称不能为空' },
         ],
       },
     },
     {
       fieldType: 'ImageUploadItem',
-      fieldName: '职业图标',
+      fieldName: '鱼类图标',
       settings: {
         length: 1,
         url: 'upload',
@@ -97,79 +88,7 @@ const formCon = ({
       options: {
         initialValue: data['img'],
         rules: [
-          { required: false, message: '请选择职业图标' },
-        ],
-      },
-    },
-    {
-      fieldType: 'AutoComplete',
-      fieldName: '生产职业',
-      settings: {
-        placeholder: '请选择',
-        allowClear: true,
-        dataSource: jobQuery.map(renderOption),
-        onSearch: v => handleJobSearch(v),
-      },
-      form,
-      valueName: 'jobId',
-      options: {
-        initialValue: data['jobId'] ? data['jobId'].toString() : null,
-        rules: [
-          { required: true, message: '生产职业为必选项' },
-        ],
-      },
-    },
-    {
-      fieldType: 'Input',
-      fieldName: '等级',
-      settings: {
-        placeholder: '等级',
-        type: 'number',
-        clear: true,
-      },
-      form,
-      valueName: 'level',
-      options: {
-        initialValue: data['level'],
-        normalize: v => parseInt(v, 10),
-        rules: [
-          { type: 'number', message: '等级应为数字' },
-        ],
-      },
-    },
-    {
-      fieldType: 'Input',
-      fieldName: '难度',
-      settings: {
-        placeholder: '难度',
-        type: 'number',
-        clear: true,
-      },
-      form,
-      valueName: 'difficulty',
-      options: {
-        initialValue: data['difficulty'],
-        normalize: v => parseInt(v, 10),
-        rules: [
-          { type: 'number', message: '难度应为数字' },
-        ],
-      },
-    },
-    {
-      fieldType: 'Input',
-      fieldName: '耐久',
-      settings: {
-        placeholder: '耐久',
-        type: 'number',
-        clear: true,
-      },
-      form,
-      valueName: 'stamina',
-      options: {
-        initialValue: data['stamina'],
-        normalize: v => parseInt(v, 10),
-        rules: [
-          { type: 'number', message: '耐久应为数字' },
+          { required: false, message: '请选择鱼类图标' },
         ],
       },
     },
@@ -189,12 +108,12 @@ const formCon = ({
     width: '400px',
     wrapClassName: 'vertical-center-modal',
     maskClosable: true,
-    confirmLoading: loading.effects['product/edit'],
+    confirmLoading: loading.effects['fish/edit'],
 
     onOk: handleSubmit,
     onCancel: () => {
       dispatch({
-        type: 'product/hideModal',
+        type: 'fish/hideModal',
       })
     },
     // body: <VerForm {...formProps} />,
@@ -202,7 +121,7 @@ const formCon = ({
 
   const MultiColPropsP1 = [
     {
-      label: '作物信息',
+      label: '鱼类信息',
       childrens: <MyForm {...formPropsP1} />,
     },
   ]

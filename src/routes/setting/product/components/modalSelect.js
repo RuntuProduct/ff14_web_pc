@@ -17,57 +17,10 @@ const MdoalSelectCon = ({
   dispatch,
   ...modalProps
 }) => {
-  const columnsShow = [
-    {
-      title: '素材图标',
-      dataIndex: 'img',
-      key: 'img',
-      className: les.imgCol,
-      render: da => <img className={les.img} src={`${imgBaseURL}${da}`} alt="图标" />,
-    },
-    {
-      title: '素材名称',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: '来源职业',
-      dataIndex: 'jobName',
-      key: 'jobName',
-    },
-    {
-      title: '素材类型',
-      dataIndex: 'type',
-      key: 'type',
-    },
-    {
-      title: '素材数量',
-      dataIndex: 'num',
-      key: 'num',
-    },
-    {
-      title: '操作',
-      // dataIndex: 'num',
-      width: 70,
-      key: 'setting',
-      render: () => {
-        return <Button type="danger" size="small">删除</Button>
-      },
-    },
-  ]
-  const tableShowProps = {
-    dataSource: modalSelectList,
-    columns: columnsShow,
-    bordered: true,
-    rowKey: record => record.id,
-    loading: loading.effects['product/searchMat'],
-    pagination: false,
-  }
-
   const sendProps = {
     ...modalProps,
     visible: true,
-    width: '80%',
+    width: '40%',
     wrapClassName: 'vertical-center-modal',
     maskClosable: true,
     onOk: null,
@@ -80,7 +33,9 @@ const MdoalSelectCon = ({
       title: '素材图标',
       dataIndex: 'img',
       key: 'img',
-      render: da => <img src={da} alt="图标" />,
+      className: les.imgCol,
+      width: '6em',
+      render: da => <img className={les.img} src={`${imgBaseURL}${da}`} alt="图标" />,
     },
     {
       title: '素材名称',
@@ -137,13 +92,7 @@ const MdoalSelectCon = ({
 
   const formMultiProps = [
     {
-      label: '现有配方',
-      className: les.left,
-      childrens: <Table {...tableShowProps} />,
-    },
-    {
       label: '素材检索',
-      className: les.right,
       childrens: (
         <div>
           <div className={les.btnLab}>
