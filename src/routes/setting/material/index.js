@@ -4,9 +4,8 @@ import { connect } from 'dva'
 import { routerRedux } from 'dva/router'
 import { Button, Modal } from 'antd'
 import { tools } from '@components'
-import { dealStrAry } from '@utils/pubfuc'
-import { imgs } from '@utils/config'
-// import les from '.'
+import { imgBaseURL, imgs } from '@utils/config'
+import les from './index.less'
 import ModalEdit from './components/modal'
 import SearchArea from './components/search'
 
@@ -79,13 +78,13 @@ const MeterialIndexCon = ({
   }
   const renderIcon = (re) => {
     if (re === '01') {
-      return <img src={mining} alt="挖掘" />
+      return <img src={mining} alt="挖掘" title="挖掘" />
     } else if (re === '02') {
-      return <img src={quarrying} alt="碎石" />
+      return <img src={quarrying} alt="碎石" title="碎石" />
     } else if (re === '03') {
-      return <img src={logging} alt="采伐" />
+      return <img src={logging} alt="采伐" title="采伐" />
     } else if (re === '04') {
-      return <img src={harvesting} alt="割草" />
+      return <img src={harvesting} alt="割草" title="割草" />
     } else {
       return <span>无</span>
     }
@@ -108,20 +107,30 @@ const MeterialIndexCon = ({
   }
   const columns = [
     {
-      title: '生产职业',
-      dataIndex: 'jobName',
-      key: 'jobName',
+      title: '材料名称',
+      // dataIndex: 'name',
+      key: 'name',
+      className: les.iconLab,
+      render: (rec) => {
+        return (
+          <div className={les.iconCon}>
+            <img className={les.icon} src={`${imgBaseURL}${rec.img}`} alt="图标" />
+            <div className={les.name}>{rec.name}</div>
+          </div>
+        )
+      },
     },
     {
       title: '采集类型',
       dataIndex: 'getType',
       key: 'getType',
+      className: les.iconLab,
       render: re => renderIcon(re),
     },
     {
-      title: '材料名称',
-      dataIndex: 'name',
-      key: 'name',
+      title: '生产职业',
+      dataIndex: 'jobName',
+      key: 'jobName',
     },
     {
       title: '操作',

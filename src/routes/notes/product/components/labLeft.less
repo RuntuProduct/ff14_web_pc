@@ -1,0 +1,34 @@
+@import url('../index.less');
+
+.title {
+  font-size: @fs_title;
+  line-height: 2em;
+}
+
+.leftCon {
+  width: 14em;
+  padding: @padding @padding @padding 0;
+  border-right: 1px solid @c_bg;
+}
+
+.searchCon {
+  margin-bottom: 16px;
+}
+
+.ul {
+  .li {
+    line-height: 1.8em;
+    padding-left: 1em;
+    margin-bottom: 4px;
+    border-top-left-radius: 0.9em;
+    border-bottom-left-radius: 0.9em;
+    cursor: pointer;
+    &:hover {
+      background-color: @c_hover;
+    }
+    &.act {
+      background: linear-gradient(left, @c_glod, transparent);
+    }
+    
+  }
+}

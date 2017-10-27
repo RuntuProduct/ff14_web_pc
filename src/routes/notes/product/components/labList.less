@@ -1,0 +1,58 @@
+@import url('../index.less');
+
+.listCon {
+  display: flex;
+  flex-direction: column;
+  width: 36em;
+  border-right: 1px solid @c_bg;
+
+  .infoCon {
+    flex: 1;
+    padding: @padding;
+  }
+  .descCon {
+    flex-basis: 16em;
+    flex-shrink: 0;
+    padding: @padding;
+    border-top: 1px solid @c_bg;
+  }
+}
+
+@itemHei: 48px;
+@levelHei: 18px;
+
+.itemCon {
+  height: @itemHei;
+  display: flex;
+  margin-bottom: 4px;
+  cursor: pointer;
+  &:hover {
+    background-color: @c_hover;
+  }
+
+  .icon {
+    height: @itemHei;
+    width: @itemHei;
+    flex-shrink: 0;
+    margin-right: 6px;
+    :global(img) {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .content {
+    flex: 1;
+
+    .name {
+      height: @itemHei - @levelHei;
+      line-height: @itemHei - @levelHei;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .level {
+      height: @levelHei;
+      line-height: @levelHei;
+    }
+  }
+}

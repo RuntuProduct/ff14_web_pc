@@ -152,8 +152,11 @@ const Routers = function router({ history, app }) {
               path: '/notes/product',
               component: dynamic({
                 app,
-                models: () => [],
-                component: () => import('./routes/setting/job'),
+                models: () => [
+                  import('./models/setting/job'),
+                  import('./models/notes/product'),
+                ],
+                component: () => import('./routes/notes/product'),
               }),
             },
             {

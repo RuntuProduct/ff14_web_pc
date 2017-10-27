@@ -29,8 +29,9 @@ const formCon = ({
 
   // console.log(data)
   const handleSubmit = () => {
-    console.log(form.getFieldsValue())
+    // console.log(form.getFieldsValue())
     form.validateFields((err, values) => {
+      console.log('err', err)
       if (!err) {
         console.log('Received values of form: ', values)
         // 提交表单
@@ -87,7 +88,7 @@ const formCon = ({
     },
     {
       fieldType: 'ImageUploadItem',
-      fieldName: '职业图标',
+      fieldName: '作物图标',
       settings: {
         length: 1,
         url: 'upload',
@@ -97,7 +98,7 @@ const formCon = ({
       options: {
         initialValue: data['img'],
         rules: [
-          { required: false, message: '请选择职业图标' },
+          { required: false, message: '请选择作物图标' },
         ],
       },
     },
@@ -107,7 +108,7 @@ const formCon = ({
       settings: {
         placeholder: '请选择',
         allowClear: true,
-        dataSource: jobQuery.map(renderOption),
+        dataSource: jobQuery.filter(da => da.type === '02').map(renderOption),
         onSearch: v => handleJobSearch(v),
       },
       form,
@@ -133,7 +134,7 @@ const formCon = ({
         initialValue: data['level'],
         normalize: v => parseInt(v, 10),
         rules: [
-          { type: 'number', message: '等级应为数字' },
+          { required: false, type: 'number', message: '等级应为数字' },
         ],
       },
     },
@@ -151,7 +152,7 @@ const formCon = ({
         initialValue: data['difficulty'],
         normalize: v => parseInt(v, 10),
         rules: [
-          { type: 'number', message: '难度应为数字' },
+          { required: false, type: 'number', message: '难度应为数字' },
         ],
       },
     },
@@ -169,7 +170,7 @@ const formCon = ({
         initialValue: data['stamina'],
         normalize: v => parseInt(v, 10),
         rules: [
-          { type: 'number', message: '耐久应为数字' },
+          { required: false, type: 'number', message: '耐久应为数字' },
         ],
       },
     },

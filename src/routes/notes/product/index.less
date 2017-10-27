@@ -1,0 +1,47 @@
+@padding: 0.8em;
+@fs_title: 18px;
+@c_bg: #cecece;
+@c_glod: #D4CD96;
+@c_hover: #ecf6fd;
+
+.baseCon {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .botCon {
+    flex: 1;
+    display: flex;
+  }
+}
+
+@jobLabHei: 3em;
+
+.jobLabCon {
+  height: @jobLabHei + @padding;
+  display: flex;
+  flex-shrink: 0;
+  padding-bottom: @padding;
+  border-bottom: 1px solid @c_bg;
+
+  .jobIcon {
+    height: @jobLabHei;
+    width: @jobLabHei;
+    margin-right: 16px;
+    background-color: #4D4D4D;
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+
+    &.act {
+      border: 2px solid darken(@c_glod, 20%);
+    }
+
+    :global(img) {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

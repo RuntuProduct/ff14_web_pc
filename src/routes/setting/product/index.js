@@ -4,8 +4,8 @@ import { connect } from 'dva'
 import { routerRedux } from 'dva/router'
 import { Button, Modal } from 'antd'
 import { tools } from '@components'
-import { dealStrAry } from '@utils/pubfuc'
-// import les from '.'
+import { imgBaseURL } from '@utils/config'
+import les from './index.less'
 import ModalEdit from './components/modal'
 import ModalForm from './components/modalFormula'
 import ModalSelect from './components/modalSelect'
@@ -117,8 +117,16 @@ const ProductIndexCon = ({
   const columns = [
     {
       title: '作物名称',
-      dataIndex: 'name',
       key: 'name',
+      className: les.iconLab,
+      render: (rec) => {
+        return (
+          <div className={les.iconCon}>
+            <img className={les.icon} src={`${imgBaseURL}${rec.img}`} alt="图标" />
+            <div className={les.name}>{rec.name}</div>
+          </div>
+        )
+      },
     },
     {
       title: '生产职业',

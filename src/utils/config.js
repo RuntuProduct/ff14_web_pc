@@ -1,6 +1,6 @@
 import { url } from './init'
 
-const baseUrlRoot = 'http://192.168.31.78:3000'
+const baseUrlRoot = 'http://192.168.31.200:3000'
 
 module.exports = {
   name: '生产手册 Demo',
@@ -21,6 +21,8 @@ module.exports = {
     material: '/material',          // 材料设置
     fish: '/fish',                  // 鱼类设置
     formula: '/formula',            // 配方相关
+    // 各类笔记
+    productNotes: '/notes/product', // 制作笔记
   },
   imgs: {
     mining: `${baseUrlRoot}/060438.png`, // 挖掘
@@ -28,4 +30,11 @@ module.exports = {
     logging: `${baseUrlRoot}/060433.png`,  // 采伐
     harvesting: `${baseUrlRoot}/060432.png`, // 割草
   },
+  levelAry: [
+    { key: 0, ary: [1, 5] },
+    { key: 1, ary: [6, 10] },
+    { key: 2, ary: [11, 15] },
+    { key: 3, ary: [16, 20] },
+    { key: 4, ary: [21, 25] },
+  ],
 }
