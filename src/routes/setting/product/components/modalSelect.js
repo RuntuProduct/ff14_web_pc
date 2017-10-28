@@ -78,7 +78,8 @@ const MdoalSelectCon = ({
     }
   }
   const handleSelChange = (payload) => {
-    dispatch({ type: 'product/saveSelectVal', payload })
+    console.log(payload)
+    dispatch({ type: 'product/saveSelectType', payload })
   }
   const selectBefore = () => {
     return (
@@ -89,6 +90,11 @@ const MdoalSelectCon = ({
       </Select>
     )
   }
+  const handleValChange = (e) => {
+    console.log(e.target.value)
+    const payload = e.target.value
+    dispatch({ type: 'product/saveSelectVal', payload })
+  }
 
   const formMultiProps = [
     {
@@ -97,7 +103,7 @@ const MdoalSelectCon = ({
         <div>
           <div className={les.btnLab}>
             <div className={les.ipt}>
-              <Input addonBefore={selectBefore()} placeholder={'材料名称/作物名称/鱼类名称'} />
+              <Input addonBefore={selectBefore()} placeholder={'材料名称/作物名称/鱼类名称'} onChange={handleValChange} />
             </div>
             <Button className={les.btn} type="primary" size="large" onClick={dealSearch}>搜索</Button>
           </div>

@@ -34,15 +34,22 @@
     height: @itemHei;
     width: @itemHei;
     flex-shrink: 0;
-    margin-right: 6px;
+    margin-right: 2px;
     :global(img) {
       width: 100%;
       height: 100%;
     }
   }
 
+  &.act .content {
+    background-color: @c_glod;
+  }
+
   .content {
     flex: 1;
+    padding-left: 4px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
 
     .name {
       height: @itemHei - @levelHei;

@@ -11,8 +11,10 @@ export default {
 
   state: {
     jobId: 4,
+    productId: null,
     level: levelAry[0],
     data: [],
+    formula: {},
   },
 
   subscriptions: {
@@ -65,7 +67,7 @@ export default {
       if (!pid) throw new Error('作物id错误！')
       const { success, data, message } = yield call(getFormula, { pid })
       if (success) {
-        //
+        yield put({ type: 'saveFormula', payload: data })
       } else {
         throw new Error('获取配方失败')
       }
@@ -80,6 +82,20 @@ export default {
       return {
         ...state,
         data: payload,
+      }
+    },
+    // 选择要显示的作物
+    selectProduct(state, { payload }) {
+      return {
+        ...state,
+        productId: payload,
+      }
+    },
+    // 保存配方
+    saveFormula(state, { payload }) {
+      return {
+        ...state,
+        formula: payload,
       }
     },
     // 保存搜索条件

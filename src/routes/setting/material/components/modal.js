@@ -1,11 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
 import { Form, Row, Col, AutoComplete } from 'antd'
 import { tools } from '@components'
 // import styles from '.'
-import { imgs } from '@utils/config'
+import { config, pubfuc } from '@utils'
 
-const { Modal, MyForm, MultiCol } = tools
+const { imgs } = config
+const { dealStrToAry } = pubfuc
+const { Modal, MyForm } = tools
 const Option = AutoComplete.Option
 const { mining, quarrying, logging, harvesting } = imgs
 
@@ -17,6 +20,8 @@ const formCon = ({
   dispatch,
   ...modalProps
 }) => {
+  data = _.cloneDeep(data)
+  data.getType = dealStrToAry(data.getType)
   const {
     getFieldValue,
   } = form
@@ -120,7 +125,7 @@ const formCon = ({
       },
     },
     {
-      fieldType: 'Radio',
+      fieldType: 'Checkbox',
       fieldName: '采集类型',
       settings: {
         placeholder: '请选择',

@@ -2,10 +2,11 @@ import queryString from 'query-string'
 import { query, add, edit, deleteNode } from '@services/setting/material'
 import { message } from 'antd'
 // import { parse } from 'qs'
-import { config } from '@utils'
+import { config, pubfuc } from '@utils'
 
 const MSG = message
 const { defaultPage, defaultPageSize } = config
+const { dealAryToStr } = pubfuc
 
 export default {
 
@@ -75,10 +76,14 @@ export default {
         editType,
         id,
         img,
+        getType,
         ...params
       } = payload
       if (img && img.length) {
         params.img = img[0]['url']
+      }
+      if (getType) {
+        params.getType = dealAryToStr(getType)
       }
       console.log('params:', params)
       if (editType === 'add') {

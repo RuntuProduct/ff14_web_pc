@@ -9,6 +9,7 @@ import { imgBaseURL } from '@utils/config'
 import les from './index.less'
 import LabLeft from './components/labLeft'
 import LabList from './components/labList'
+import LabFormula from './components/labFormula'
 
 const { BtnLab, TableTab, Table } = tools
 const { Nor } = TableTab
@@ -23,8 +24,10 @@ const ProductNotesIndexCon = ({
 }) => {
   const {
     jobId,
+    productId,
     level,
     data,
+    formula,
   } = productNotes
   const {
     list: jobList,
@@ -52,6 +55,11 @@ const ProductNotesIndexCon = ({
   }
   const propsLabList = {
     data,
+    productId,
+    dispatch,
+  }
+  const propsLabFormula = {
+    formula,
     dispatch,
   }
 
@@ -64,6 +72,8 @@ const ProductNotesIndexCon = ({
         <LabLeft {...propsLabLeft} />
         {/* 配方列表 */}
         <LabList {...propsLabList} />
+        {/* 配方详情 */}
+        <LabFormula {...propsLabFormula} />
       </div>
     </div>
   )

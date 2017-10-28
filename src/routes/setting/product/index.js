@@ -33,9 +33,11 @@ const ProductIndexCon = ({
     modalVisible,
     modalFVisible,
     modalItem,
+    formula,
 
     modalSelectVisible,
     modalSelectType,
+    modalSelectVal,
     modalSelectList,
     modalSelectPage,
 
@@ -90,6 +92,11 @@ const ProductIndexCon = ({
   }
   // 显示配方编辑弹窗
   const showModalF = (title, obj) => {
+    const { id } = obj
+    dispatch({
+      type: 'product/getFormula',
+      payload: { pid: id },
+    })
     dispatch({
       type: 'product/showModalF',
       payload: {
@@ -183,6 +190,7 @@ const ProductIndexCon = ({
   const modalFProps = {
     title: modalTitle,
     data: modalItem,
+    formula,
     loading,
     dispatch,
   }
@@ -190,6 +198,7 @@ const ProductIndexCon = ({
     title: '添加素材',
     data: modalItem,
     modalSelectType,
+    modalSelectVal,
     modalSelectList,
     modalSelectPage,
     loading,

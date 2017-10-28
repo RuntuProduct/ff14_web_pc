@@ -57,8 +57,8 @@ class MyCheckbox extends React.Component {
                   }) :
                   son.map((so, idx) => {
                     return (
-                      <Tooltip placement={so.placement || 'top'} title={so.tips}>
-                        <Checkbox key={idx} value={so.value}>{so.label}</Checkbox>
+                      <Tooltip key={idx} placement={so.placement || 'top'} title={so.tips}>
+                        <Checkbox value={so.value}>{so.label}</Checkbox>
                       </Tooltip>
                     )
                   })

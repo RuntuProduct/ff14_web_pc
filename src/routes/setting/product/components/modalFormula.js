@@ -11,7 +11,7 @@ const Option = AutoComplete.Option
 
 const formCon = ({
   data = {},
-  jobQuery,
+  formula,
   form,
   loading,
   dispatch,
@@ -123,6 +123,7 @@ const formCon = ({
   }
   const tablePropsP1 = {
     data,
+    formula,
     dispatch,
   }
   const MultiColPropsP1 = [

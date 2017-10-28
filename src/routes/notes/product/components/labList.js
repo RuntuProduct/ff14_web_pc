@@ -6,15 +6,17 @@ import les from './labList.less'
 
 const LabListCon = ({
   data = [],
+  productId,
   dispatch,
 }) => {
   const dealClick = (pid) => {
+    dispatch({ type: 'productNotes/selectProduct', payload: pid })
     dispatch({ type: 'productNotes/getFormula', pid })
   }
   const mapListCon = (ary) => {
     return ary.map((ar) => {
       return (
-        <div key={ar.id} className={les.itemCon} onClick={() => dealClick(ar.id)}>
+        <div key={ar.id} className={`${les.itemCon} ${productId == ar.id ? les.act : ''}`} onClick={() => dealClick(ar.id)}>
           <div className={les.icon}><img src={`${imgBaseURL}${ar.img}`} alt="图标" /></div>
           <div className={les.content}>
             <div className={les.name}>{ar.name}</div>

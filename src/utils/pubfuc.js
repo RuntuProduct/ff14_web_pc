@@ -135,12 +135,16 @@ function dealMap(map, data) {
 }
 
 // 将字符串转化为数组
-const dealStrAry = (str) => {
+const dealStrToAry = (str) => {
   if (str) {
     return str.split(',')
   } else {
     return []
   }
+}
+// 将数组转化为字符串
+const dealAryToStr = (ary) => {
+  return ary.join(',')
 }
 
 // 获取cookies
@@ -158,7 +162,7 @@ const delCookie = (name) => {
   const exp = new Date()
   exp.setTime(exp.getTime() - 1)
   const cval = getCookieByString(name)
-  if (cval!=null) {
+  if (cval != null) {
     document.cookie = `${name}=${cval};path:/;expires=${exp.toGMTString()}`
   }
 }
@@ -166,7 +170,8 @@ const delCookie = (name) => {
 export default {
   floatAdd,
   dealMap,
-  dealStrAry,
+  dealStrToAry,
+  dealAryToStr,
   getCookieByString,
   delCookie,
 }
