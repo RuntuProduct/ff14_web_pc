@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Upload, Icon, Modal } from 'antd'
 import _ from 'lodash'
 import { baseURL, imgBaseURL } from '../../../../utils/config'
-// import les from '.'
+import les from './upload.less'
 
 class UploadCon extends React.Component {
   constructor(props) {
@@ -13,6 +13,7 @@ class UploadCon extends React.Component {
     this.state = {
       previewVisible: false,
       previewImage: '',
+      zoom: '100%',
       value,
     }
   }
@@ -53,8 +54,8 @@ class UploadCon extends React.Component {
   }
 
   render() {
-    const { length, url } = this.props
-    const { previewVisible, previewImage, value } = this.state
+    const { length, url, viewProps } = this.props
+    const { previewVisible, previewImage, value, zoom } = this.state
     const fileList = value.map((da, idx) => {
       if (imgBaseURL && da.url) {
         return {
@@ -71,6 +72,18 @@ class UploadCon extends React.Component {
         <div className="ant-upload-text">上传</div>
       </div>
     )
+    const handleZoom = (e) => {
+      // console.log(e.deltaMode)
+      // console.log(e.deltaX)
+      // console.log(e.deltaY)
+      // console.log(e.deltaZ)
+      const { deltaX, deltaY } = e
+      if (deltaY < 0) {
+        this.setState({ zoom: `${parseInt(zoom, 10) * 1.1}%` })
+      } else {
+        this.setState({ zoom: `${parseInt(zoom, 10) * 0.9}%` })
+      }
+    }
     return (
       <div className="clearfix">
         <Upload
@@ -82,8 +95,8 @@ class UploadCon extends React.Component {
         >
           {value.length >= length ? null : uploadButton}
         </Upload>
-        <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-          <img alt="图片" style={{ width: '100%' }} src={previewImage} />
+        <Modal {...viewProps} className={les.modal} visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+          <img alt="图片" style={{ width: '100%' }} className={les.img} onWheel={handleZoom} src={previewImage} />
         </Modal>
       </div>
     )
@@ -93,6 +106,7 @@ class UploadCon extends React.Component {
 UploadCon.defaultProps = {
   length: 3,
   url: '/upload',
+  viewProps: { width: '400px' },
 }
 
 UploadCon.propTypes = {

@@ -1,5 +1,5 @@
 import queryString from 'query-string'
-import { query, add, edit, deleteNode } from '@services/setting/fish'
+import { query, add, edit } from '@services/setting/map'
 import { message } from 'antd'
 // import { parse } from 'qs'
 import { config } from '@utils'
@@ -9,7 +9,7 @@ const { defaultPage, defaultPageSize } = config
 
 export default {
 
-  namespace: 'fish',
+  namespace: 'map',
 
   state: {
     list: [],
@@ -31,7 +31,7 @@ export default {
     setup({ dispatch, history }) {
       history.listen(({ pathname, search }) => {
         // 进入路由，获取数据
-        if (pathname === '/setting/fish') {
+        if (pathname === '/setting/map') {
           const query = queryString.parse(search)
           dispatch({
             type: 'query',

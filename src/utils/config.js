@@ -21,6 +21,7 @@ module.exports = {
     material: '/material',          // 材料设置
     fish: '/fish',                  // 鱼类设置
     formula: '/formula',            // 配方相关
+    map: '/map',                    // 地图相关
     // 各类笔记
     productNotes: '/notes/product', // 制作笔记
   },

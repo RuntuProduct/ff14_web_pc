@@ -140,6 +140,17 @@ const Routers = function router({ history, app }) {
                 component: () => import('./routes/setting/fish'),
               }),
             },
+            {
+              // 系统管理 - 地图配置
+              path: '/setting/map',
+              component: dynamic({
+                app,
+                models: () => [
+                  import('./models/setting/map'),
+                ],
+                component: () => import('./routes/setting/map'),
+              }),
+            },
           ],
         },
         {
