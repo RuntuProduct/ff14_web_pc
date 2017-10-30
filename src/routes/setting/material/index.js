@@ -4,11 +4,13 @@ import { connect } from 'dva'
 import { routerRedux } from 'dva/router'
 import { Button, Modal } from 'antd'
 import { tools } from '@components'
-import { imgBaseURL, imgs } from '@utils/config'
+import { config, pubfuc } from '@utils'
 import les from './index.less'
 import ModalEdit from './components/modal'
 import SearchArea from './components/search'
 
+const { imgBaseURL, imgs } = config
+const { dealStrToAry } = pubfuc
 const { BtnLab, TableTab, Table } = tools
 const { Nor } = TableTab
 const { mining, quarrying, logging, harvesting } = imgs
@@ -125,7 +127,9 @@ const MeterialIndexCon = ({
       dataIndex: 'getType',
       key: 'getType',
       className: les.iconLab,
-      render: re => renderIcon(re),
+      render: (re) => {
+        return dealStrToAry(re).map((da, idx) => <span key={idx}>{renderIcon(da)}</span>)
+      },
     },
     {
       title: '生产职业',
