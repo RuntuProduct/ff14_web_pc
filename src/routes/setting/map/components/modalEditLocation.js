@@ -52,6 +52,16 @@ const formCon = ({
     },
     {
       fieldType: 'Hidden',
+      fieldName: '地图id',
+      form,
+      valueName: 'mapId',
+      options: {
+        initialValue: data['mapId'],
+        rules: [],
+      },
+    },
+    {
+      fieldType: 'Hidden',
       fieldName: '编辑时该节点的id',
       form,
       valueName: 'id',
@@ -62,9 +72,9 @@ const formCon = ({
     },
     {
       fieldType: 'Input',
-      fieldName: '地图名称',
+      fieldName: '地点名称',
       settings: {
-        placeholder: '地图名称',
+        placeholder: '地点名称',
         clear: true,
       },
       form,
@@ -72,26 +82,27 @@ const formCon = ({
       options: {
         initialValue: data['name'],
         rules: [
-          { required: true, message: '地图名称不能为空' },
+          { required: true, message: '地点名称不能为空' },
         ],
       },
     },
     {
-      fieldType: 'ImageUploadItem',
-      fieldName: '地图图片',
-      settings: {
-        length: 1,
-        url: 'upload',
-        viewProps: { width: '80%' },
-      },
+      fieldType: 'Select',
+      fieldName: '地点类型',
+      settings: {},
       form,
-      valueName: 'img',
+      valueName: 'type',
       options: {
-        initialValue: data['img'],
+        initialValue: data.type === undefined ? '01' : `${data.type}`,
         rules: [
-          { required: false, message: '请选择地图图片' },
+          { required: true },
         ],
       },
+      son: [
+        { label: '采集点', value: '01' },
+        { label: '挖矿点', value: '02' },
+        { label: '传送点', value: '03' },
+      ],
     },
   ]
 
@@ -119,11 +130,20 @@ const formCon = ({
     },
     // body: <VerForm {...formProps} />,
   }
+  const MapSetting = () => {
+    return (
+      <div>aaa</div>
+    )
+  }
 
   const MultiColPropsP1 = [
     {
       label: '基本信息',
       childrens: <MyForm {...formPropsP1} />,
+    },
+    {
+      label: '位置信息',
+      childrens: MapSetting(),
     },
   ]
 

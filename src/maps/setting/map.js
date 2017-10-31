@@ -21,6 +21,17 @@ const mapGet = {
       id: 'id',
       name: 'name',
       img: 'img',
+      positionAry: {
+        tar: 'positionAry',
+        map: [{
+          id: 'id',
+          name: 'name',
+          mapId: 'mapId',
+          axisX: 'axisX',
+          axisY: 'axisY',
+          type: 'type',
+        }],
+      },
     }],
   },
   current: 'current',

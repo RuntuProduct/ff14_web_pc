@@ -8,7 +8,8 @@ import { imgBaseURL } from '@utils/config'
 // import les from '.'
 import SearchArea from './components/search'
 import ModalEdit from './components/modal'
-import ModalPosition from './components/modalPosition'
+import ModalLocation from './components/modalLocation'
+import ModalLocationDetail from './components/modalEditLocation'
 
 const { BtnLab, TableTab, Table } = tools
 const { Nor } = TableTab
@@ -29,7 +30,11 @@ const ProductIndexCon = ({
     modalVisible,
     modalItem,
 
-    modalPositionVisible,
+    modalLocationVisible,
+
+    modalLocationDetailTitle,
+    modalLocationDetailItem,
+    modalLocationDetailVisible,
   } = map
 
   const searchProps = {
@@ -82,6 +87,13 @@ const ProductIndexCon = ({
       },
     })
   }
+  // 显示地点编辑弹窗
+  const showModalLocation = (rec) => {
+    dispatch({
+      type: 'map/showModalLocation',
+      payload: { obj: rec },
+    })
+  }
   const columns = [
     {
       title: '地图名称',
@@ -95,8 +107,8 @@ const ProductIndexCon = ({
         return (
           <span>
             <a onClick={() => showModal('编辑地图', record)}>编辑</a>
-            {/* <span className="ant-divider" />
-            <a onClick={() => dealDelete(record)}>删除</a> */}
+            <span className="ant-divider" />
+            <a onClick={() => showModalLocation(record)}>编辑地点</a>
           </span>
         )
       },
@@ -117,8 +129,14 @@ const ProductIndexCon = ({
     loading,
     dispatch,
   }
-  const modalPositionProps = {
+  const modalLocationProps = {
     data: modalItem,
+    loading,
+    dispatch,
+  }
+  const modalLocationDetailProps = {
+    title: modalLocationDetailTitle,
+    data: modalLocationDetailItem,
     loading,
     dispatch,
   }
@@ -135,7 +153,9 @@ const ProductIndexCon = ({
       {/* 添加、编辑弹窗 */}
       {modalVisible && <ModalEdit {...modalProps} />}
       {/* 地点编辑弹窗 */}
-      {modalPositionVisible && <ModalPosition {...modalPositionProps} />}
+      {modalLocationVisible && <ModalLocation {...modalLocationProps} />}
+      {/* 地点详情编辑弹窗 */}
+      {modalLocationDetailVisible && <ModalLocationDetail {...modalLocationDetailProps} />}
     </div>
   )
 }

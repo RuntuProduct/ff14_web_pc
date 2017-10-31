@@ -24,6 +24,12 @@ export default {
     modalTitle: '',   // 弹窗标题
     modalVisible: false,  // 添加、编辑弹窗显示状态
     modalItem: null,  // 当前编辑对象
+
+    modalLocationVisible: false,  // 地点编辑弹窗显示状态
+
+    modalLocationDetailTitle: null,
+    modalLocationDetailItem: null,
+    modalLocationDetailVisible: false,  // 地点详情编辑弹窗显示状态
   },
 
   subscriptions: {
@@ -102,7 +108,7 @@ export default {
         }
       }
     },
-    // // 添加、编辑鱼类
+    // // 删除地图
     // *delete({
     //   payload,
     // }, { put, call }) {
@@ -121,7 +127,6 @@ export default {
     //     throw new Error(message)
     //   }
     // },
-
   },
 
   reducers: {
@@ -151,6 +156,36 @@ export default {
       const modalItem = null
       const modalTitle = null
       return { ...state, modalTitle, modalItem, modalVisible: false }
+    },
+
+    // 显示地点配置弹窗
+    showModalLocation(state, { payload }) {
+      const { obj: modalItem } = payload
+      return { ...state, modalItem, modalLocationVisible: true }
+    },
+    // 关闭地点配置弹窗
+    hideModalLocation(state) {
+      const modalItem = null
+      return { ...state, modalItem, modalLocationVisible: false }
+    },
+
+    // 显示地点详情配置弹窗
+    showModalLocationDetail(state, { tit: modalLocationDetailTitle, obj: modalLocationDetailItem }) {
+      return {
+        ...state,
+        modalLocationDetailTitle,
+        modalLocationDetailItem,
+        modalLocationDetailVisible: true,
+      }
+    },
+    // 关闭地点详情配置弹窗
+    hideModalLocationDetail(state) {
+      return {
+        ...state,
+        modalLocationDetailTitle: null,
+        modalLocationDetailItem: null,
+        modalLocationDetailVisible: false,
+      }
     },
 
     // 保存query
