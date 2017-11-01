@@ -1,44 +1,35 @@
 import { request, config, pubfuc } from '@utils'
 import { stringify } from 'qs'
-import { mapGet, fishAddSent, fishEditSent } from '@maps/setting/map'
+import { locaitonAddSent, locationEditSent } from '@maps/setting/location'
 
 const { api } = config
-const { map } = api
+const { location } = api
 const { dealMap } = pubfuc
 
-export async function query(params) {
-  const res = await request({
-    url: `${map}?${stringify(params)}`,
-    method: 'get',
-  })
-  res.data = dealMap(mapGet, res.data)
-  return res
-}
-
-// 添加地图
+// 添加地点
 export async function add(params) {
-  params = dealMap(fishAddSent, params)
+  params = dealMap(locaitonAddSent, params)
   const res = await request({
-    url: `${map}`,
+    url: `${location}`,
     method: 'post',
     data: params,
   })
   return res
 }
 
-// 编辑地图
+// 编辑地点
 export async function edit(params) {
-  params = dealMap(fishEditSent, params)
+  params = dealMap(locationEditSent, params)
   console.log(params)
   const res = await request({
-    url: `${map}`,
+    url: `${location}`,
     method: 'put',
     data: params,
   })
   return res
 }
 
-// // 编辑鱼类
+// // 删除地点
 // export async function deleteNode(params) {
 //   params = dealMap(fishDeleteSent, params)
 //   const res = await request({

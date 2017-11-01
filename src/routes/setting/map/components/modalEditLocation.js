@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Form, Row, Col, AutoComplete } from 'antd'
+import { Form, Row, Col } from 'antd'
 import { tools } from '@components'
-// import styles from '.'
+import { imgBaseURL } from '@utils/config'
+import les from './modalEditLocation.less'
+import LocationSetting from './locationSetting'
 
 const { Modal, MyForm, MultiCol } = tools
-const Option = AutoComplete.Option
 
 const formCon = ({
   data = {},
@@ -16,16 +17,7 @@ const formCon = ({
   ...modalProps
 }) => {
   data = _.cloneDeep(data)
-  const { img } = data
-  if (img && typeof img == 'string') {
-    data.img = [{
-      uid: 'upload-1',
-      url: img,
-    }]
-  }
-  console.log(data)
 
-  // console.log(data)
   const handleSubmit = () => {
     console.log(form.getFieldsValue())
     form.validateFields((err, values) => {
@@ -33,7 +25,7 @@ const formCon = ({
         console.log('Received values of form: ', values)
         // 提交表单
         dispatch({
-          type: 'map/edit',
+          type: 'map/editLocation',
           payload: values,
         })
       }
@@ -104,6 +96,38 @@ const formCon = ({
         { label: '传送点', value: '03' },
       ],
     },
+    {
+      fieldType: 'Input',
+      fieldName: 'X坐标',
+      settings: {
+        placeholder: 'X坐标',
+        readonly: true,
+      },
+      form,
+      valueName: 'axisX',
+      options: {
+        initialValue: data['axisX'] || 0,
+        rules: [
+          { required: true, message: 'X坐标不能为空' },
+        ],
+      },
+    },
+    {
+      fieldType: 'Input',
+      fieldName: 'Y坐标',
+      settings: {
+        placeholder: 'Y坐标',
+        readonly: true,
+      },
+      form,
+      valueName: 'axisY',
+      options: {
+        initialValue: data['axisY'] || 0,
+        rules: [
+          { required: true, message: 'Y坐标不能为空' },
+        ],
+      },
+    },
   ]
 
 
@@ -117,23 +141,22 @@ const formCon = ({
   const sendProps = {
     ...modalProps,
     visible: true,
-    width: '400px',
+    width: '90%',
     wrapClassName: 'vertical-center-modal',
     maskClosable: true,
-    confirmLoading: loading.effects['map/edit'],
+    confirmLoading: loading.effects['map/editLocation'],
 
     onOk: handleSubmit,
     onCancel: () => {
       dispatch({
-        type: 'map/hideModal',
+        type: 'map/hideModalLocationDetail',
       })
     },
     // body: <VerForm {...formProps} />,
   }
-  const MapSetting = () => {
-    return (
-      <div>aaa</div>
-    )
+  const propLS = {
+    data,
+    form,
   }
 
   const MultiColPropsP1 = [
@@ -141,15 +164,24 @@ const formCon = ({
       label: '基本信息',
       childrens: <MyForm {...formPropsP1} />,
     },
+  ]
+  const MultiColPropsP2 = [
     {
       label: '位置信息',
-      childrens: MapSetting(),
+      childrens: <LocationSetting {...propLS} />,
     },
   ]
 
   return (
     <Modal modalProps={sendProps}>
-      <MultiCol data={MultiColPropsP1} />
+      <Row gutter={16}>
+        <Col span={10}>
+          <MultiCol data={MultiColPropsP1} />
+        </Col>
+        <Col span={14}>
+          <MultiCol data={MultiColPropsP2} />
+        </Col>
+      </Row>
     </Modal>
   )
 }

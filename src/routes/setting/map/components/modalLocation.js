@@ -4,7 +4,7 @@ import { Button } from 'antd'
 import { tools } from '@components'
 import { imgBaseURL } from '@utils/config'
 import les from './modalLocation.less'
-import LocationPoint from './locationPoint'
+import LocationPointShow from './locationPointShow'
 
 const { Modal } = tools
 
@@ -14,18 +14,31 @@ const ModalLocationCon = ({
   dispatch,
   ...modalProps
 }) => {
-  const { img, positionAry } = data
+  const { id, img, baseX, baseY, positionAry } = data
   const mapPosition = () => {
     return positionAry.map((po) => {
       const LPprops = {
         ...po,
+        baseX,
+        baseY,
+        mapId: id,
+        mapImg: img,
+        dispatch,
       }
-      return <LocationPoint key={po.id} {...LPprops} />
+      return <LocationPointShow key={po.id} {...LPprops} />
+    })
+  }
+  // 进入添加地点弹窗
+  const handleAdd = () => {
+    dispatch({
+      type: 'map/showModalLocationDetail',
+      tit: '添加地点',
+      obj: { editType: 'add', mapId: id, img, baseX, baseY },
     })
   }
   const sendProps = {
     ...modalProps,
-    title: '编辑地点',
+    title: '地点一览',
     visible: true,
     width: '90%',
     wrapClassName: 'vertical-center-modal',
@@ -39,9 +52,6 @@ const ModalLocationCon = ({
       })
     },
     // body: <VerForm {...formProps} />,
-  }
-  const handleAdd = () => {
-    dispatch({ type: 'map/showModalLocationDetail', tit: '添加地点', obj: { editType: 'add' } })
   }
 
   return (

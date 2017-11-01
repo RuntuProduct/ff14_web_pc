@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Form, Row, Col, AutoComplete } from 'antd'
+import { imgBaseURL } from '@utils/config'
 import { tools } from '@components'
 // import styles from '.'
 
@@ -23,7 +24,7 @@ const formCon = ({
       url: img,
     }]
   }
-  console.log(data)
+  // console.log(data)
 
   // console.log(data)
   const handleSubmit = () => {
@@ -83,13 +84,52 @@ const formCon = ({
         length: 1,
         url: 'upload',
         viewProps: { width: '80%' },
+        dealChange: (fileList) => {
+          console.log(fileList)
+          if (fileList && fileList.length && fileList[0]['fileDetail']) {
+            const { width, height } = fileList[0]['fileDetail']
+            form.setFieldsValue({ baseX: width, baseY: height })
+          }
+        },
       },
       form,
       valueName: 'img',
       options: {
         initialValue: data['img'],
         rules: [
-          { required: false, message: '请选择地图图片' },
+          { required: true, message: '请选择地图图片' },
+        ],
+      },
+    },
+    {
+      fieldType: 'Input',
+      fieldName: '地图宽度',
+      settings: {
+        placeholder: '地图宽度(通过添加地图图片自动获取）',
+        readonly: true,
+      },
+      form,
+      valueName: 'baseX',
+      options: {
+        initialValue: data['baseX'],
+        rules: [
+          { required: true, message: '地图宽度不能为空' },
+        ],
+      },
+    },
+    {
+      fieldType: 'Input',
+      fieldName: '地图高度',
+      settings: {
+        placeholder: '地图高度(通过添加地图图片自动获取）',
+        readonly: true,
+      },
+      form,
+      valueName: 'baseY',
+      options: {
+        initialValue: data['baseY'],
+        rules: [
+          { required: true, message: '地图高度不能为空' },
         ],
       },
     },

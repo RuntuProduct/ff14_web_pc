@@ -3,12 +3,16 @@
 const fishAddSent = {
   name: 'name',
   img: 'img',
+  baseX: 'baseX',
+  baseY: 'baseY',
 }
 
 const fishEditSent = {
   id: 'id',
   name: 'name',
   img: 'img',
+  baseX: 'baseX',
+  baseY: 'baseY',
 }
 const fishDeleteSent = {
   id: 'id',
@@ -21,6 +25,8 @@ const mapGet = {
       id: 'id',
       name: 'name',
       img: 'img',
+      baseX: 'baseX',
+      baseY: 'baseY',
       positionAry: {
         tar: 'positionAry',
         map: [{

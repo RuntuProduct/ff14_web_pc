@@ -1,5 +1,6 @@
 import queryString from 'query-string'
 import { query, add, edit } from '@services/setting/map'
+import { add as addLo, edit as editLo } from '@services/setting/location'
 import { message } from 'antd'
 // import { parse } from 'qs'
 import { config } from '@utils'
@@ -103,6 +104,39 @@ export default {
           MSG.success(data)
           yield put({ type: 'query', payload: {} })
           yield put({ type: 'hideModal' })
+        } else {
+          throw new Error(message)
+        }
+      }
+    },
+    // 添加、编辑地点
+    *editLocation({
+      payload,
+    }, { put, call }) {
+      const {
+        editType,
+        id,
+        ...params
+      } = payload
+      console.log('params:', params)
+      if (editType === 'add') {
+        // 添加节点逻辑
+        const { success, data, message } = yield call(addLo, params)
+        if (success) {
+          MSG.success(data)
+          yield put({ type: 'query', payload: {} })
+          yield put({ type: 'hideModalLocationDetail' })
+        } else {
+          throw new Error(message)
+        }
+      } else {
+        params.id = id
+        // 编辑节点逻辑
+        const { success, data, message } = yield call(editLo, params)
+        if (success) {
+          MSG.success(data)
+          yield put({ type: 'query', payload: {} })
+          yield put({ type: 'hideModalLocationDetail' })
         } else {
           throw new Error(message)
         }

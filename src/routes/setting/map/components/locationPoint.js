@@ -1,18 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Popover, Button } from 'antd'
+import _ from 'lodash'
 import Draggable from 'react-draggable'
-import { tools } from '@components'
-import { imgBaseURL } from '@utils/config'
 import les from './locationPoint.less'
 
-const { Modal } = tools
+const math = require('mathjs')
 
 class LocationPointCon extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      modalShow: false,
       moving: false,
       moveX: this.props.axisX,
       moveY: this.props.axisY,
@@ -20,31 +17,54 @@ class LocationPointCon extends React.Component {
   }
   render() {
     const {
-      id,
-      name,
-      mapId,
+      parentX,
+      parentY,
+      baseX,
+      baseY,
       axisX,
       axisY,
-      type,
-      dispatch,
+      onChange,
     } = this.props
     const {
       moving,
       moveX,
       moveY,
     } = this.state
+    // 计算实际值
+    const mathReal = (x, y) => {
+      if (!parseInt(parentX, 10) || !parseInt(parentY, 10) || !baseX || !baseY) {
+        throw new Error('坐标错误')
+      }
+      // 根据传入的规格baseX、baseY作为底数计算实际坐标值
+      const realX = math.eval(`(${x} * ${baseX}) / ${parseInt(parentX, 10)}`)
+      const realY = math.eval(`(${y} * ${baseY}) / ${parseInt(parentY, 10)}`)
+      console.log(realX, realY)
+      return { realX, realY }
+    }
     const handleStart = () => {
-      this.setState({ moving: true })
+      // this.setState({ moving: true })
     }
     const handleDrag = (e, data) => {
       // console.log('e:', e)
       // console.log('data:', data)
       const { x, y } = data
+      // console.log(baseX, baseY)
       // console.log(x, y)
       this.setState({ moveX: x, moveY: y })
     }
-    const handleStop = () => {
-      this.setState({ moving: false })
+    const handleStop = (e, data) => {
+      console.log('e:', e)
+      console.log('data:', data)
+      const { x, y } = data
+      if (!parseInt(parentX, 10) || !parseInt(parentY, 10) || !baseX || !baseY) {
+        throw new Error('坐标错误')
+      }
+      // 根据传入的规格baseX、baseY作为底数计算实际坐标值
+      const realX = math.eval(`(${x} * ${baseX}) / ${parseInt(parentX, 10)}`)
+      const realY = math.eval(`(${y} * ${baseY}) / ${parseInt(parentY, 10)}`)
+      console.log(realX, realY)
+      // this.setState({ moving: false })
+      onChange(x, y)
     }
     const dragProps = {
       axis: 'both',
@@ -55,36 +75,13 @@ class LocationPointCon extends React.Component {
       onDrag: handleDrag,
       onStop: handleStop,
     }
-    const TipsContent = () => {
-      let typeTxt = '未知类型'
-      if (type === '01') {
-        typeTxt = '采集点'
-      } else if (type === '02') {
-        typeTxt = '挖矿点'
-      } else if (type === '03') {
-        typeTxt = '传送点'
-      }
-      return (
-        <div>
-          <div>地点类型：{typeTxt}</div>
-          <div className={les.btnLab}>
-            <Button type="primary" size="small">编辑</Button>
-            <Button type="danger" size="small">删除</Button>
-          </div>
-        </div>
-      )
-    }
 
     return (
       <Draggable {...dragProps}>
         <div className={les.positionPoint}>
-          <div className={les.nameTxt}>{name}</div>
-          <Popover content={TipsContent()} title={name}>
-            <div className={les.content} />
-          </Popover>
+          <div className={les.content} />
           <div className={les.positionTxt}>{`(${moveX}, ${moveY})`}</div>
         </div>
-        
       </Draggable>
     )
   }

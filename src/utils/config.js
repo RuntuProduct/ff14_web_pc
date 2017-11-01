@@ -22,6 +22,7 @@ module.exports = {
     fish: '/fish',                  // 鱼类设置
     formula: '/formula',            // 配方相关
     map: '/map',                    // 地图相关
+    location: '/location',  // 地点相关
     // 各类笔记
     productNotes: '/notes/product', // 制作笔记
   },

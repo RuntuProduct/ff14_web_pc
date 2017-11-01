@@ -152,7 +152,7 @@ const ProductIndexCon = ({
       <Table {...tableProps} />
       {/* 添加、编辑弹窗 */}
       {modalVisible && <ModalEdit {...modalProps} />}
-      {/* 地点编辑弹窗 */}
+      {/* 地点一览弹窗 */}
       {modalLocationVisible && <ModalLocation {...modalLocationProps} />}
       {/* 地点详情编辑弹窗 */}
       {modalLocationDetailVisible && <ModalLocationDetail {...modalLocationDetailProps} />}

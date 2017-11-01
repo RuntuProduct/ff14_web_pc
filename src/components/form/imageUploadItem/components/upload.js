@@ -31,14 +31,15 @@ class UploadCon extends React.Component {
     // 处理上传状态
     console.log(file, fileList)
     const { uid, status, response } = file
-    if (status == 'done') {
+    if (status == 'done' && response && response.status === 'success') {
       const { data } = response
-      const { filename } = data
+      const { detail, filename } = data
       const tarIndex = _.findIndex(fileList, (fi) => {
         return fi.uid === uid
       })
       if (tarIndex !== -1) {
         fileList[tarIndex]['url'] = `/${filename}`
+        fileList[tarIndex]['fileDetail'] = detail
       }
     }
     this.setState({ value: fileList })
@@ -48,8 +49,12 @@ class UploadCon extends React.Component {
   triggerChange = (changedValue) => {
     // Should provide an event to pass value to Form.
     const onChange = this.props.onChange
+    const dealChange = this.props.dealChange
     if (onChange) {
       onChange(changedValue)
+      if (dealChange && typeof dealChange === 'function') {
+        dealChange(changedValue)
+      }
     }
   }
 
