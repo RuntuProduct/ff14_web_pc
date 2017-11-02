@@ -1,7 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
 import { Popover, Button } from 'antd'
 import les from './locationPoint.less'
+
+const math = require('mathjs')
 
 const LocationPointCon = ({
   id,
@@ -10,6 +13,8 @@ const LocationPointCon = ({
   axisY,
   type,
 
+  parentX,
+  parentY,
   baseX,
   baseY,
   mapId,
@@ -56,8 +61,37 @@ const LocationPointCon = ({
     )
   }
 
+  // touch-action: none;
+  // transform: translate(162px, 284px);
+
+  // 根据实际值计算组件内使用的值
+  const realProps = () => {
+    const x = axisX
+    const y = axisY
+    if (!parseInt(parentX, 10) || !parseInt(parentY, 10) || !baseX || !baseY) {
+      return { moveX: 0, moveY: 0 }
+      // throw new Error('坐标错误')
+    } else {
+      // 根据传入的规格baseX、baseY计算组件内使用值
+      let moveX = math.eval(`(${x} * ${parseInt(parentX, 10)}) / ${baseX}`)
+      let moveY = math.eval(`(${y} * ${parseInt(parentY, 10)}) / ${baseY}`)
+      moveX = _.floor(moveX)
+      moveY = _.floor(moveY)
+      // console.log('moveX:', moveX, 'moveY', moveY)
+      return { moveX, moveY }
+    }
+  }
+
+  const realStyles = () => {
+    const { moveX, moveY } = realProps()
+    return {
+      touchAction: 'none',
+      transform: `translate(${moveX}px, ${moveY}px)`,
+    }
+  }
+
   return (
-    <div className={les.positionPoint}>
+    <div className={les.positionPoint} style={realStyles()}>
       <div className={les.nameTxt}>{name}</div>
       <Popover content={TipsContent()} title={name}>
         <div className={les.content} />
