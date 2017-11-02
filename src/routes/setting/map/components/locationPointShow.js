@@ -44,10 +44,14 @@ const LocationPointCon = ({
   const TipsContent = () => {
     let typeTxt = '未知类型'
     if (type === '01') {
-      typeTxt = '采集点'
-    } else if (type === '02') {
       typeTxt = '挖矿点'
+    } else if (type === '02') {
+      typeTxt = '碎石点'
     } else if (type === '03') {
+      typeTxt = '采集点'
+    } else if (type === '04') {
+      typeTxt = '割草点'
+    } else if (type === '05') {
       typeTxt = '传送点'
     }
     return (
