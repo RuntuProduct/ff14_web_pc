@@ -1,5 +1,5 @@
 import queryString from 'query-string'
-import { query, add, edit } from '@services/setting/map'
+import { query, add, edit, detail } from '@services/setting/map'
 import { add as addLo, edit as editLo, delete as delLo } from '@services/setting/location'
 import { message } from 'antd'
 // import { parse } from 'qs'
@@ -72,6 +72,21 @@ export default {
         throw message
       }
     },
+    // 获取单一地图数据
+    *mapDetail({
+      id,
+    }, { put, call }) {
+      if (id === undefined || parseInt(id, 10) != id) {
+        throw new Error('id错误')
+      }
+      const { success, data, message } = yield call(detail, { id })
+      if (success) {
+        console.log('target:', data)
+        yield put({ type: 'updateModal', payload: data })
+      } else {
+        throw message
+      }
+    },
     // 添加、编辑地图
     *edit({
       payload,
@@ -116,20 +131,24 @@ export default {
       const {
         editType,
         id,
+        mapId,
         ...params
       } = payload
       console.log('params:', params)
       if (editType === 'add') {
+        params.mapId = mapId
         // 添加节点逻辑
         const { success, data, message } = yield call(addLo, params)
         if (success) {
           MSG.success(data)
           yield put({ type: 'query', payload: {} })
           yield put({ type: 'hideModalLocationDetail' })
+          yield put({ type: 'mapDetail', id: mapId })
         } else {
           throw new Error(message)
         }
       } else {
+        params.mapId = mapId
         params.id = id
         // 编辑节点逻辑
         const { success, data, message } = yield call(editLo, params)
@@ -137,6 +156,7 @@ export default {
           MSG.success(data)
           yield put({ type: 'query', payload: {} })
           yield put({ type: 'hideModalLocationDetail' })
+          yield put({ type: 'mapDetail', id: mapId })
         } else {
           throw new Error(message)
         }
@@ -163,12 +183,14 @@ export default {
     // },
     // 删除地图
     *deleteLocation({
+      mapId,
       id,
     }, { put, call }) {
       if (!id) throw new Error('地图id错误')
       const { success, data, message } = yield call(delLo, { id })
       if (success) {
         MSG.success(data)
+        yield put({ type: 'mapDetail', id: mapId })
       } else {
         throw new Error(message)
       }
@@ -203,6 +225,10 @@ export default {
       const modalItem = null
       const modalTitle = null
       return { ...state, modalTitle, modalItem, modalVisible: false }
+    },
+    // 更新弹窗数据
+    updateModal(state, { payload }) {
+      return { ...state, modalItem: payload }
     },
 
     // 显示地点配置弹窗

@@ -20,7 +20,7 @@ export async function detail(params) {
     url: `${map}?${stringify(params)}`,
     method: 'get',
   })
-  res.data = dealMap(mapDetailGet, res.data)
+  res.data = dealMap(mapDetailGet, res.data[0])
   return res
 }
 
