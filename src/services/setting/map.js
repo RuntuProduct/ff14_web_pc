@@ -1,23 +1,32 @@
 import { request, config, pubfuc } from '@utils'
 import { stringify } from 'qs'
-import { mapGet, fishAddSent, fishEditSent } from '@maps/setting/map'
+import { mapGet, mapDetailGet, mapAddSent, mapEditSent } from '@maps/setting/map'
 
 const { api } = config
-const { map } = api
+const { map, mapList } = api
 const { dealMap } = pubfuc
 
 export async function query(params) {
   const res = await request({
-    url: `${map}?${stringify(params)}`,
+    url: `${mapList}?${stringify(params)}`,
     method: 'get',
   })
   res.data = dealMap(mapGet, res.data)
   return res
 }
 
+export async function detail(params) {
+  const res = await request({
+    url: `${map}?${stringify(params)}`,
+    method: 'get',
+  })
+  res.data = dealMap(mapDetailGet, res.data)
+  return res
+}
+
 // 添加地图
 export async function add(params) {
-  params = dealMap(fishAddSent, params)
+  params = dealMap(mapAddSent, params)
   const res = await request({
     url: `${map}`,
     method: 'post',
@@ -28,7 +37,7 @@ export async function add(params) {
 
 // 编辑地图
 export async function edit(params) {
-  params = dealMap(fishEditSent, params)
+  params = dealMap(mapEditSent, params)
   console.log(params)
   const res = await request({
     url: `${map}`,

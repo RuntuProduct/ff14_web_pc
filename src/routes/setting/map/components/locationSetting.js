@@ -17,6 +17,11 @@ class LocationPointCon extends React.Component {
   }
 
   componentDidMount = () => {
+    // const component = this.parentCon
+    // const { width, height } = window.getComputedStyle(component)
+    // this.setState({ pX: width, pY: height })
+  }
+  handleImgLoad = () => {
     const component = this.parentCon
     const { width, height } = window.getComputedStyle(component)
     this.setState({ pX: width, pY: height })
@@ -46,9 +51,14 @@ class LocationPointCon extends React.Component {
       onChange: (axisX, axisY) => form.setFieldsValue({ axisX, axisY }),
     }
     return (
-      <div ref={(c) => { this.parentCon = c }} className={les.imgArea}>
+      <div className={les.imgArea}>
         <LocationPoint {...pointProps} />
-        <img src={`${imgBaseURL}${img}`} alt="地图图片" />
+        <img
+          src={`${imgBaseURL}${img}`}
+          alt="地图图片"
+          ref={(c) => { this.parentCon = c }}
+          onLoad={this.handleImgLoad.bind(this)}
+        />
       </div>
     )
   }

@@ -18,6 +18,10 @@ class ModalLocationCon extends React.Component {
   }
 
   componentDidMount = () => {
+    // console.log(1)
+  }
+
+  handleImgLoad = () => {
     const component = this.parentCon
     const { width, height } = window.getComputedStyle(component)
     this.setState({ pX: width, pY: height })
@@ -85,7 +89,12 @@ class ModalLocationCon extends React.Component {
           </div>
           <div className={les.imgArea}>
             {mapPosition()}
-            <img ref={(c) => { this.parentCon = c }} src={`${imgBaseURL}${img}`} alt="地图图片" />
+            <img
+              src={`${imgBaseURL}${img}`}
+              alt="地图图片"
+              ref={(c) => { this.parentCon = c }}
+              onLoad={this.handleImgLoad.bind(this)}
+            />
           </div>
         </div>
       </Modal>

@@ -1,6 +1,6 @@
 import queryString from 'query-string'
 import { query, add, edit } from '@services/setting/map'
-import { add as addLo, edit as editLo } from '@services/setting/location'
+import { add as addLo, edit as editLo, delete as delLo } from '@services/setting/location'
 import { message } from 'antd'
 // import { parse } from 'qs'
 import { config } from '@utils'
@@ -72,7 +72,7 @@ export default {
         throw message
       }
     },
-    // 添加、编辑作物
+    // 添加、编辑地图
     *edit({
       payload,
     }, { put, call }) {
@@ -161,6 +161,19 @@ export default {
     //     throw new Error(message)
     //   }
     // },
+    // 删除地图
+    *deleteLocation({
+      id,
+    }, { put, call }) {
+      if (!id) throw new Error('地图id错误')
+      const { success, data, message } = yield call(delLo, { id })
+      if (success) {
+        MSG.success(data)
+      } else {
+        throw new Error(message)
+      }
+    },
+
   },
 
   reducers: {

@@ -1,13 +1,13 @@
 // 格式 - 新键值名：从原始数据中取值的键值名
 
-const fishAddSent = {
+const mapAddSent = {
   name: 'name',
   img: 'img',
   baseX: 'baseX',
   baseY: 'baseY',
 }
 
-const fishEditSent = {
+const mapEditSent = {
   id: 'id',
   name: 'name',
   img: 'img',
@@ -16,6 +16,25 @@ const fishEditSent = {
 }
 const fishDeleteSent = {
   id: 'id',
+}
+
+const mapDetailGet = {
+  id: 'id',
+  name: 'name',
+  img: 'img',
+  baseX: 'baseX',
+  baseY: 'baseY',
+  positionAry: {
+    tar: 'positionAry',
+    map: [{
+      id: 'id',
+      name: 'name',
+      mapId: 'mapId',
+      axisX: 'axisX',
+      axisY: 'axisY',
+      type: 'type',
+    }],
+  },
 }
 
 const mapGet = {
@@ -46,8 +65,9 @@ const mapGet = {
 }
 
 export default {
-  fishAddSent,
-  fishEditSent,
+  mapAddSent,
+  mapEditSent,
   fishDeleteSent,
+  mapDetailGet,
   mapGet,
 }

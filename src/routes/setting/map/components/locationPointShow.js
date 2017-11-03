@@ -41,6 +41,10 @@ const LocationPointCon = ({
       },
     })
   }
+  // 删除地点
+  const handleDelete = () => {
+    dispatch({ type: 'map/', id })
+  }
   const TipsContent = () => {
     let typeTxt = '未知类型'
     if (type === '01') {
@@ -59,7 +63,7 @@ const LocationPointCon = ({
         <div>地点类型：{typeTxt}</div>
         <div className={les.btnLab}>
           <Button type="primary" size="small" onClick={handleEdit}>编辑</Button>
-          <Button type="danger" size="small">删除</Button>
+          <Button type="danger" size="small" onClick={handleDelete}>删除</Button>
         </div>
       </div>
     )

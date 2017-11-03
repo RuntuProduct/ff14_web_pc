@@ -17,7 +17,12 @@ const locationEditSent = {
   type: 'type',
 }
 
+const locationDeleteSent = {
+  id: 'id',
+}
+
 export default {
   locaitonAddSent,
   locationEditSent,
+  locationDeleteSent,
 }

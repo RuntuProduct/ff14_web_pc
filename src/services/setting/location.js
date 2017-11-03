@@ -1,6 +1,6 @@
 import { request, config, pubfuc } from '@utils'
 import { stringify } from 'qs'
-import { locaitonAddSent, locationEditSent } from '@maps/setting/location'
+import { locaitonAddSent, locationEditSent, locationDeleteSent } from '@maps/setting/location'
 
 const { api } = config
 const { location } = api
@@ -29,13 +29,12 @@ export async function edit(params) {
   return res
 }
 
-// // 删除地点
-// export async function deleteNode(params) {
-//   params = dealMap(fishDeleteSent, params)
-//   const res = await request({
-//     url: `${fish}`,
-//     method: 'delete',
-//     data: params,
-//   })
-//   return res
-// }
+// 删除地点
+export async function deleteNode(params) {
+  params = dealMap(locationDeleteSent, params)
+  const res = await request({
+    url: `${location}${stringify(params)}`,
+    method: 'delete',
+  })
+  return res
+}
