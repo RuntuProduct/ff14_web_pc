@@ -2,9 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Popover, Button, Modal } from 'antd'
-import les from './locationPoint.less'
+import { imgs } from '@utils/config'
+import les from './locationPointShow.less'
 
 const math = require('mathjs')
+
+const { loMining, loQuarrying, loLogging, loHarvesting, loSend } = imgs
 
 const LocationPointCon = ({
   id,
@@ -98,11 +101,28 @@ const LocationPointCon = ({
     }
   }
 
+  const realBgImg = () => {
+    let img = ''
+    if (type === '01') {
+      img = loMining
+    } else if (type === '02') {
+      img = loQuarrying
+    } else if (type === '03') {
+      img = loLogging
+    } else if (type === '04') {
+      img = loHarvesting
+    } else if (type === '05') {
+      img = loSend
+    }
+    return `url(${img})`
+  }
+
   const realStyles = () => {
     const { moveX, moveY } = realProps()
     return {
       touchAction: 'none',
       transform: `translate(${moveX}px, ${moveY}px)`,
+      backgroundImage: realBgImg(),
     }
   }
 

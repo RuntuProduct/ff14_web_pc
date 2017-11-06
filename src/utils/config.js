@@ -32,6 +32,12 @@ module.exports = {
     quarrying: `${baseUrlRoot}/060437.png`,  // 碎石
     logging: `${baseUrlRoot}/060433.png`,  // 采伐
     harvesting: `${baseUrlRoot}/060432.png`, // 割草
+
+    loMining: `${baseUrlRoot}/lo_01.png`, // 挖掘点图标
+    loQuarrying: `${baseUrlRoot}/lo_02.png`, // 碎石点图标
+    loLogging: `${baseUrlRoot}/lo_03.png`,  // 采伐点图标
+    loHarvesting: `${baseUrlRoot}/lo_04.png`, // 割草点图标
+    loSend: `${baseUrlRoot}/lo_05.png`, // 传送点图标
   },
   levelAry: [
     { key: 0, ary: [1, 5] },
