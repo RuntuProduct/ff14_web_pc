@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Popover, Button } from 'antd'
+import { Popover, Button, Modal } from 'antd'
 import les from './locationPoint.less'
 
 const math = require('mathjs')
@@ -43,7 +43,15 @@ const LocationPointCon = ({
   }
   // 删除地点
   const handleDelete = () => {
-    dispatch({ type: 'map/', id })
+    Modal.confirm({
+      title: '删除地点',
+      content: `确定删除【${name}】吗`,
+      okText: '确认',
+      cancelText: '取消',
+      onOk: () => {
+        dispatch({ type: 'map/deleteLocation', id, mapId })
+      },
+    })
   }
   const TipsContent = () => {
     let typeTxt = '未知类型'

@@ -33,7 +33,7 @@ export async function edit(params) {
 export async function deleteNode(params) {
   params = dealMap(locationDeleteSent, params)
   const res = await request({
-    url: `${location}${stringify(params)}`,
+    url: `${location}?${stringify(params)}`,
     method: 'delete',
   })
   return res

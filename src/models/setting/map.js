@@ -1,6 +1,6 @@
 import queryString from 'query-string'
 import { query, add, edit, detail } from '@services/setting/map'
-import { add as addLo, edit as editLo, delete as delLo } from '@services/setting/location'
+import { add as addLo, edit as editLo, deleteNode as delLo } from '@services/setting/location'
 import { message } from 'antd'
 // import { parse } from 'qs'
 import { config } from '@utils'
@@ -183,14 +183,17 @@ export default {
     // },
     // 删除地图
     *deleteLocation({
-      mapId,
       id,
+      mapId,
     }, { put, call }) {
-      if (!id) throw new Error('地图id错误')
+      if (id === undefined) throw new Error('地点id错误')
+      if (mapId === undefined) throw new Error('地图id错误')
       const { success, data, message } = yield call(delLo, { id })
       if (success) {
         MSG.success(data)
+        // 获取删除后的详情
         yield put({ type: 'mapDetail', id: mapId })
+        yield put({ type: 'query' })
       } else {
         throw new Error(message)
       }

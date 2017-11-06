@@ -91,9 +91,11 @@ const formCon = ({
         ],
       },
       son: [
-        { label: '采集点', value: '01' },
-        { label: '挖矿点', value: '02' },
-        { label: '传送点', value: '03' },
+        { label: '挖矿点', value: '01' },
+        { label: '碎石点', value: '02' },
+        { label: '采集点', value: '03' },
+        { label: '割草点', value: '04' },
+        { label: '传送点', value: '05' },
       ],
     },
     {
