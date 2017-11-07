@@ -3,7 +3,7 @@ import { stringify } from 'qs'
 import { locaitonAddSent, locationEditSent, locationDeleteSent } from '@maps/setting/location'
 
 const { api } = config
-const { location } = api
+const { location, collectionQuery } = api
 const { dealMap } = pubfuc
 
 // 添加地点
@@ -35,6 +35,16 @@ export async function deleteNode(params) {
   const res = await request({
     url: `${location}?${stringify(params)}`,
     method: 'delete',
+  })
+  return res
+}
+
+// 获取目标搜索值
+export async function searchCol(params) {
+  // params = dealMap(locationDeleteSent, params)
+  const res = await request({
+    url: `${collectionQuery}?${stringify(params)}`,
+    method: 'get',
   })
   return res
 }

@@ -1,6 +1,6 @@
 import queryString from 'query-string'
 import { query, add, edit, detail } from '@services/setting/map'
-import { add as addLo, edit as editLo, deleteNode as delLo } from '@services/setting/location'
+import { add as addLo, edit as editLo, deleteNode as delLo, searchCol } from '@services/setting/location'
 import { message } from 'antd'
 // import { parse } from 'qs'
 import { config } from '@utils'
@@ -197,6 +197,12 @@ export default {
       } else {
         throw new Error(message)
       }
+    },
+    // 获取搜索值
+    *getTarSearch({
+      val,
+    }, { put, call }) {
+      const { success, data, message } = yield call(searchCol, { val })
     },
 
   },

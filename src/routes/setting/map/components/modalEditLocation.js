@@ -4,6 +4,7 @@ import _ from 'lodash'
 import { Form, Row, Col } from 'antd'
 import { tools } from '@components'
 import { imgBaseURL } from '@utils/config'
+import CollectionSearch from './collectionSearchIpt'
 import les from './modalEditLocation.less'
 import LocationSetting from './locationSetting'
 
@@ -160,6 +161,9 @@ const formCon = ({
     data,
     form,
   }
+  const propColSearchIpt = {
+    dispatch,
+  }
 
   const MultiColPropsP1 = [
     {
@@ -167,6 +171,16 @@ const formCon = ({
       childrens: <MyForm {...formPropsP1} />,
     },
   ]
+  if (data['editType'] !== 'add') {
+    MultiColPropsP1.push({
+      label: '可采集物品',
+      childrens: (
+        <div>
+          <CollectionSearch {...propColSearchIpt} />
+        </div>
+      ),
+    })
+  }
   const MultiColPropsP2 = [
     {
       label: '位置信息',

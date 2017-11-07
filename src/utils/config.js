@@ -24,6 +24,8 @@ module.exports = {
     map: '/map',                    // 地图相关
     mapList: '/map/list',           // 地图列表
     location: '/location',          // 地点相关
+    collection: '/collection',      // 采集相关
+    collectionQuery: '/collection/query', // 获取采集目标物
     // 各类笔记
     productNotes: '/notes/product', // 制作笔记
   },
