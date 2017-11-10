@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { AutoComplete } from 'antd'
+import { Input } from 'antd'
 import { imgBaseURL } from '@utils/config'
-// import les from './modalEditLocation.less'
+import les from './collectionSearchIpt.less'
+
+const Search = Input.Search
 
 const CollectionSearchIptCon = ({
   data,
@@ -19,7 +21,9 @@ const CollectionSearchIptCon = ({
     onSearch: handleSearch,
   }
   return (
-    <AutoComplete {...atoProps} />
+    <div className={les.iptCon}>
+      <Search {...atoProps} />
+    </div>
   )
 }
 
@@ -28,7 +32,7 @@ CollectionSearchIptCon.defaultProps = {
 }
 
 CollectionSearchIptCon.propTypes = {
-  data: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
 }
 
 export default CollectionSearchIptCon

@@ -31,6 +31,8 @@ export default {
     modalLocationDetailTitle: null,
     modalLocationDetailItem: null,
     modalLocationDetailVisible: false,  // 地点详情编辑弹窗显示状态
+
+    tarList: [],    // 搜索结果
   },
 
   subscriptions: {
@@ -203,6 +205,11 @@ export default {
       val,
     }, { put, call }) {
       const { success, data, message } = yield call(searchCol, { val })
+      if (success) {
+        yield put({ type: 'saveTarSearch', payload: data })
+      } else {
+        yield put({ type: 'saveTarSearch', payload: [] })
+      }
     },
 
   },
@@ -267,6 +274,14 @@ export default {
         modalLocationDetailTitle: null,
         modalLocationDetailItem: null,
         modalLocationDetailVisible: false,
+      }
+    },
+
+    // 保存搜索结果
+    saveTarSearch(state, { payload }) {
+      return {
+        ...state,
+        tarList: payload,
       }
     },
 

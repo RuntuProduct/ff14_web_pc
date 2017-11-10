@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { Form, Row, Col } from 'antd'
 import { tools } from '@components'
 import { imgBaseURL } from '@utils/config'
-import CollectionSearch from './collectionSearchIpt'
+import CollectionLab from './collectionLab'
 import les from './modalEditLocation.less'
 import LocationSetting from './locationSetting'
 
@@ -12,6 +12,7 @@ const { Modal, MyForm, MultiCol } = tools
 
 const formCon = ({
   data = {},
+  tarList,
   form,
   loading,
   dispatch,
@@ -161,7 +162,8 @@ const formCon = ({
     data,
     form,
   }
-  const propColSearchIpt = {
+  const propCollectionLab = {
+    tarList,
     dispatch,
   }
 
@@ -176,7 +178,7 @@ const formCon = ({
       label: '可采集物品',
       childrens: (
         <div>
-          <CollectionSearch {...propColSearchIpt} />
+          <CollectionLab {...propCollectionLab} />
         </div>
       ),
     })
