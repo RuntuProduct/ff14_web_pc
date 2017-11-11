@@ -10,9 +10,34 @@
     font-weight: bold;
   }
   .tarList {
-    padding-left: 12px;
+    // padding-left: 12px;
   }
   .tarLab {
-    //
+    display: flex;
+    height: 2em;
+    line-height: 2em;
+    padding-left: 12px;
+    border-radius: 3px;
+    &:hover {
+      background: #fff;
+    }
+
+    .name {
+      flex: 1;
+    }
+    .addBtn {
+      flex-shrink: 0;
+      height: 2em;
+      line-height: 2em;
+      width: 2em;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+
+  .noContent {
+    height: 2em;
+    line-height: 2em;
+    text-align: center;
   }
 }

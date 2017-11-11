@@ -1,6 +1,6 @@
 import queryString from 'query-string'
 import { query, add, edit, detail } from '@services/setting/map'
-import { add as addLo, edit as editLo, deleteNode as delLo, searchCol } from '@services/setting/location'
+import { add as addLo, edit as editLo, deleteNode as delLo, searchCol, addCol } from '@services/setting/location'
 import { message } from 'antd'
 // import { parse } from 'qs'
 import { config } from '@utils'
@@ -209,6 +209,17 @@ export default {
         yield put({ type: 'saveTarSearch', payload: data })
       } else {
         yield put({ type: 'saveTarSearch', payload: [] })
+      }
+    },
+    // 添加采集关系
+    *addCollection({
+      params,
+    }, { put, call }) {
+      const { success, data, message } = yield call(addCol, params)
+      if (success) {
+        message.success('添加成功', 1)
+      } else {
+        throw new Error(message)
       }
     },
 

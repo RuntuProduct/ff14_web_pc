@@ -4,8 +4,8 @@ import _ from 'lodash'
 import { Form, Row, Col } from 'antd'
 import { tools } from '@components'
 import { imgBaseURL } from '@utils/config'
-import CollectionLab from './collectionLab'
 import les from './modalEditLocation.less'
+import CollectionLab from './collectionLab'
 import LocationSetting from './locationSetting'
 
 const { Modal, MyForm, MultiCol } = tools
@@ -163,6 +163,7 @@ const formCon = ({
     form,
   }
   const propCollectionLab = {
+    loId: data['id'],
     tarList,
     dispatch,
   }
