@@ -134,6 +134,7 @@ const ProductIndexCon = ({
   }
   const modalLocationProps = {
     data: modalItem,
+    colList,
     loading,
     dispatch,
   }

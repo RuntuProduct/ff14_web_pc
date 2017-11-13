@@ -13,6 +13,9 @@
   &:hover {
     // border-color: #f00;
   }
+  .contentCon {
+    width: 200px;
+  }
   .content {
     width: 100%;
     height: 100%;
@@ -44,5 +47,35 @@
     &:last-child {
       margin-right: 0;
     }
+  }
+}
+
+
+.colListcon {
+  padding: 8px 10px;
+  margin-top: 10px;
+  background: #ececec;
+  border-radius: 3px;
+}
+.colItem {
+  height: 40px;
+  line-height: 40px;
+  display: flex;
+  margin-bottom: 8px;
+
+  .img {
+    width: 40px;
+    margin-right: 10px;
+    :global(img) {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .tarName {
+    flex: 1;
+    text-align: center;
+  }
+  .tarType {
+    margin-left: 10px;
   }
 }

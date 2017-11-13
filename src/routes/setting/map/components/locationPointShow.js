@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Popover, Button, Modal } from 'antd'
-import { imgs } from '@utils/config'
+import { imgs, imgBaseURL } from '@utils/config'
 import les from './locationPointShow.less'
 
 const math = require('mathjs')
@@ -22,6 +22,8 @@ const LocationPointCon = ({
   baseY,
   mapId,
   mapImg,
+
+  colList,
   dispatch,
 }) => {
   // 进入编辑地点弹窗
@@ -58,6 +60,26 @@ const LocationPointCon = ({
       },
     })
   }
+  const mapColItem = (ary) => {
+    return ary.map((da) => {
+      const { id, img, name, tarType } = da
+      return (
+        <div key={id} className={les.colItem}>
+          {/* 采集物图标 */}
+          <div className={les.img}>
+            <img src={`${imgBaseURL}${img}`} alt={name} />
+          </div>
+          {/* 采集物名称 */}
+          <div className={les.tarName}>{name}</div>
+          {/* 采集物类型 */}
+          <div className={les.tarType}>
+            {tarType == '01' && '材料'}
+            {tarType == '02' && '鱼类'}
+          </div>
+        </div>
+      )
+    })
+  }
   const TipsContent = () => {
     let typeTxt = '未知类型'
     if (type === '01') {
@@ -72,12 +94,13 @@ const LocationPointCon = ({
       typeTxt = '传送点'
     }
     return (
-      <div>
+      <div className={les.contentCon}>
         <div>地点类型：{typeTxt}</div>
         <div className={les.btnLab}>
           <Button type="primary" size="small" onClick={handleEdit}>编辑</Button>
           <Button type="danger" size="small" onClick={handleDelete}>删除</Button>
         </div>
+        <div className={les.colListcon}>{mapColItem(colList)}</div>
       </div>
     )
   }
@@ -128,8 +151,12 @@ const LocationPointCon = ({
     }
   }
 
+  const onMouseEnter = () => {
+    dispatch({ type: 'map/getCollection', loId: id })
+  }
+
   return (
-    <div className={les.positionPoint} style={realStyles()}>
+    <div className={les.positionPoint} style={realStyles()} onMouseEnter={onMouseEnter}>
       <div className={les.nameTxt}>{name}</div>
       <Popover content={TipsContent()} title={name}>
         <div className={les.content} />

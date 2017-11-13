@@ -30,6 +30,7 @@ class ModalLocationCon extends React.Component {
   render() {
     const {
       data,
+      colList,
       loading,
       dispatch,
       ...modalProps
@@ -50,6 +51,7 @@ class ModalLocationCon extends React.Component {
           baseY,
           mapId: id,
           mapImg: img,
+          colList,
           dispatch,
         }
         return <LocationPointShow key={po.id} {...LPprops} />
