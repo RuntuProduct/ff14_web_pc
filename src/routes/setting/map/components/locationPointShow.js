@@ -43,6 +43,8 @@ const LocationPointCon = ({
         type,
       },
     })
+    // 获取采集物列表
+    dispatch({ type: 'map/getCollection', loId: id })
   }
   // 删除地点
   const handleDelete = () => {

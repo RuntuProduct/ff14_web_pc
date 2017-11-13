@@ -59,3 +59,23 @@ export async function addCol(params) {
   })
   return res
 }
+
+// 删除采集物
+export async function delCol(params) {
+  // params = dealMap(locationDeleteSent, params)
+  const res = await request({
+    url: `${collection}?${stringify(params)}`,
+    method: 'delete',
+  })
+  return res
+}
+
+// 获取采集物列表
+export async function getCol(params) {
+  // params = dealMap(locationDeleteSent, params)
+  const res = await request({
+    url: `${collection}?${stringify(params)}`,
+    method: 'get',
+  })
+  return res
+}

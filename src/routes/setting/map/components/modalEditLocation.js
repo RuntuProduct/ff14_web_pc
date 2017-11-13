@@ -13,6 +13,7 @@ const { Modal, MyForm, MultiCol } = tools
 const formCon = ({
   data = {},
   tarList,
+  colList,
   form,
   loading,
   dispatch,
@@ -165,6 +166,7 @@ const formCon = ({
   const propCollectionLab = {
     loId: data['id'],
     tarList,
+    colList,
     dispatch,
   }
 

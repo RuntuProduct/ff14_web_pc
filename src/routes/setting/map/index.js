@@ -37,6 +37,7 @@ const ProductIndexCon = ({
     modalLocationDetailVisible,
 
     tarList,
+    colList,
   } = map
 
   const searchProps = {
@@ -140,6 +141,7 @@ const ProductIndexCon = ({
     title: modalLocationDetailTitle,
     data: modalLocationDetailItem,
     tarList,
+    colList,
     loading,
     dispatch,
   }

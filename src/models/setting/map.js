@@ -1,6 +1,6 @@
 import queryString from 'query-string'
 import { query, add, edit, detail } from '@services/setting/map'
-import { add as addLo, edit as editLo, deleteNode as delLo, searchCol, addCol } from '@services/setting/location'
+import { add as addLo, edit as editLo, deleteNode as delLo, searchCol, addCol, delCol, getCol } from '@services/setting/location'
 import { message } from 'antd'
 // import { parse } from 'qs'
 import { config } from '@utils'
@@ -33,6 +33,7 @@ export default {
     modalLocationDetailVisible: false,  // 地点详情编辑弹窗显示状态
 
     tarList: [],    // 搜索结果
+    colList: [],    // 采集物节点
   },
 
   subscriptions: {
@@ -218,6 +219,34 @@ export default {
       const { success, data, message } = yield call(addCol, params)
       if (success) {
         message.success('添加成功', 1)
+        // 更新列表
+        yield put({ type: 'getCollection', loId: params.loId })
+      } else {
+        throw new Error(message)
+      }
+    },
+    // 删除采集关系
+    *deleteCollextion({
+      loId,
+      id,
+    }, { put, call }) {
+      const { success, data, message } = yield call(delCol, { id })
+      if (success) {
+        message.success('添加成功', 1)
+        // 更新列表
+        yield put({ type: 'getCollection', loId })
+      } else {
+        throw new Error(message)
+      }
+    },
+    // 获取采集关系
+    *getCollection({
+      loId,
+    }, { put, call }) {
+      yield put({ type: 'saveCol', payload: [] })
+      const { success, data, message } = yield call(getCol, { loId })
+      if (success) {
+        yield put({ type: 'saveCol', payload: data })
       } else {
         throw new Error(message)
       }
@@ -293,6 +322,14 @@ export default {
       return {
         ...state,
         tarList: payload,
+      }
+    },
+
+    // 保存采集物结果
+    saveCol(state, { payload }) {
+      return {
+        ...state,
+        colList: payload,
       }
     },
 
