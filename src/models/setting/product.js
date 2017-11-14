@@ -1,5 +1,5 @@
 import queryString from 'query-string'
-import { query, add, edit, deleteNode, addFormula } from '@services/setting/product'
+import { query, add, edit, deleteNode, addFormula, editFormula, delFormula } from '@services/setting/product'
 import { getFormula } from '@services/notes/product'
 import * as MAT from '@services/setting/material'
 import { message } from 'antd'
@@ -186,7 +186,7 @@ export default {
       const { modalItem, modalItemSetItem, modalSelectType: tarType } = yield select(state => state.product)
       const { id: pid } = modalItem
       const { id: tarId } = modalItemSetItem
-      const { addNum: num } = obj
+      const { num } = obj
       if (pid !== undefined && tarId !== undefined && tarType && parseInt(num, 10)) {
         const { success, data, message } = yield call(addFormula, {
           pid,
@@ -194,7 +194,57 @@ export default {
           tarType,
           num,
         })
-        console.log(data)
+        if (success) {
+          // 隐藏弹窗
+          yield put({ type: 'hideSet' })
+          // 更新上级弹窗
+          yield put({ type: 'getFormula', payload: { pid } })
+        } else {
+          throw new Error(message)
+        }
+      } else {
+        throw new Error('配方信息错误！')
+      }
+    },
+    // 编辑素材
+    *editMat({
+      id,
+      num,
+    }, { put, call, select }) {
+      const { modalItem } = yield select(state => state.product)
+      const { id: pid } = modalItem
+      if (id !== undefined && pid !== undefined && parseInt(num, 10)) {
+        const { success, data, message } = yield call(editFormula, {
+          id,
+          num,
+        })
+        if (success) {
+          // 隐藏弹窗
+          yield put({ type: 'hideSet' })
+          // 更新上级弹窗
+          yield put({ type: 'getFormula', payload: { pid } })
+        } else {
+          throw new Error(message)
+        }
+      } else {
+        throw new Error('配方信息错误！')
+      }
+    },
+    // 删除素材
+    *delMat({
+      pid,
+      id,
+    }, { call, put }) {
+      if (id !== undefined && pid !== undefined) {
+        const { success, data, message } = yield call(delFormula, {
+          id,
+        })
+        if (success) {
+          // 更新上级弹窗
+          yield put({ type: 'getFormula', payload: { pid } })
+        } else {
+          throw new Error(message)
+        }
       } else {
         throw new Error('配方信息错误！')
       }

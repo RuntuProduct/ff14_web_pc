@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Button, Table } from 'antd'
+import { Button, Table, Modal } from 'antd'
 import { imgBaseURL } from '@utils/config'
 import les from './formulaTable.less'
 
@@ -11,10 +11,31 @@ const FormulaTable = ({
   dispatch,
 }) => {
   data = _.cloneDeep(data)
-  console.log(formula)
+  const {
+    id: pid,
+  } = data
+  // console.log(formula)
+  // 打开添加素材弹窗
   const dealClick = () => {
     dispatch({ type: 'product/showSelect' })
     dispatch({ type: 'product/searchMat', name: '', pageData: {} })
+  }
+  // 打开编辑素材弹窗
+  const handleEdit = (id, record) => {
+    const { num, detail } = record
+    dispatch({
+      type: 'product/showSet',
+      obj: { editType: 'edit', num, ...detail },
+    })
+  }
+  // 删除素材
+  const handleDel = (id, record) => {
+    // 二次确认弹窗
+    Modal.confirm({
+      title: '删除素材',
+      content: `是否确认删除素材${record.detail.name}`,
+      onOk: () => dispatch({ type: 'product/delMat', id, pid }),
+    })
   }
   const columns = [
     {
@@ -56,6 +77,20 @@ const FormulaTable = ({
       title: '数量',
       dataIndex: 'num',
       key: 'num',
+    },
+    {
+      title: '操作',
+      // dataIndex: 'num',
+      key: 'setting',
+      render: (record) => {
+        const { id } = record
+        return (
+          <div>
+            <Button size="small" type="primary" style={{ marginRight: '10px' }} onClick={() => handleEdit(id, record)}>编辑</Button>
+            <Button size="small" type="danger" onClick={() => handleDel(id, record)}>删除</Button>
+          </div>
+        )
+      },
     },
   ]
   const tableProps = {

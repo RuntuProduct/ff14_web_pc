@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
 import { Form, Row, Col, AutoComplete } from 'antd'
 import { tools } from '@components'
 // import styles from '.'
@@ -15,6 +16,7 @@ const formCon = ({
   dispatch,
   ...modalProps
 }) => {
+  data = _.cloneDeep(data)
   const {
     getFieldValue,
   } = form
@@ -149,7 +151,7 @@ const formCon = ({
       form,
       valueName: 'difficulty',
       options: {
-        initialValue: data['difficulty'],
+        initialValue: data['difficulty'] || 0,
         normalize: v => parseInt(v, 10),
         rules: [
           { required: false, type: 'number', message: '难度应为数字' },
@@ -167,7 +169,7 @@ const formCon = ({
       form,
       valueName: 'stamina',
       options: {
-        initialValue: data['stamina'],
+        initialValue: data['stamina'] || 0,
         normalize: v => parseInt(v, 10),
         rules: [
           { required: false, type: 'number', message: '耐久应为数字' },

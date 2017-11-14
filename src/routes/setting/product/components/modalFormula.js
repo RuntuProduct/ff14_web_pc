@@ -28,10 +28,10 @@ const formCon = ({
       url: img,
     }]
   }
-  console.log(data)
+  // console.log(data)
 
   const handleSubmit = () => {
-    console.log(form.getFieldsValue())
+    // console.log(form.getFieldsValue())
     form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)

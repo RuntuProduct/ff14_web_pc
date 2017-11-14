@@ -60,3 +60,24 @@ export async function addFormula(params) {
   })
   return res
 }
+
+// 编辑配方
+export async function editFormula(params) {
+  // params = dealMap(formulaSend, params)
+  const res = await request({
+    url: `${formula}`,
+    method: 'put',
+    data: params,
+  })
+  return res
+}
+
+// 删除配方
+export async function delFormula(params) {
+  // params = dealMap(formulaSend, params)
+  const res = await request({
+    url: `${formula}?${stringify(params)}`,
+    method: 'delete',
+  })
+  return res
+}

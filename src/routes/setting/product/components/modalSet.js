@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
 import { Form, Button } from 'antd'
 import { tools } from '@components'
 import { imgBaseURL } from '@utils/config'
@@ -13,6 +14,8 @@ const MdoalSelectCon = ({
   dispatch,
   ...modalProps
 }) => {
+  data = _.cloneDeep(data)
+  console.log(data)
   const dealCancel = () => {
     dispatch({ type: 'product/hideSet' })
   }
@@ -20,7 +23,13 @@ const MdoalSelectCon = ({
     form.validateFields((err, values) => {
       if (!err) {
         console.log(values)
-        dispatch({ type: 'product/addMat', obj: values })
+        const { editType } = data
+        if (editType == 'add') {
+          dispatch({ type: 'product/addMat', obj: values })
+        } else if (editType == 'edit') {
+          const { id, num } = values
+          dispatch({ type: 'product/editMat', id, num })
+        }
       }
     })
   }
@@ -41,6 +50,15 @@ const MdoalSelectCon = ({
 
   const formData = [
     {
+      fieldType: 'Hidden',
+      fieldName: '素材名称',
+      valueName: 'id',
+      form,
+      options: {
+        initialValue: data['id'],
+      },
+    },
+    {
       fieldType: 'nor',
       fieldName: '素材名称',
       value: data.name,
@@ -52,17 +70,17 @@ const MdoalSelectCon = ({
     },
     {
       fieldType: 'Input',
-      fieldName: '添加数量',
+      fieldName: '数量',
       settings: {
-        placeholder: '要添加的数量',
+        placeholder: '素材的数量',
         clear: true,
       },
       form,
-      valueName: 'addNum',
+      valueName: 'num',
       options: {
-        initialValue: data['addNum'],
+        initialValue: data['num'],
         rules: [
-          { required: true, message: '要输入要添加的数量哦' },
+          { required: true, message: '要输入素材的数量哦' },
         ],
       },
     },

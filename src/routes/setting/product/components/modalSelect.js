@@ -58,7 +58,7 @@ const MdoalSelectCon = ({
       width: 70,
       key: 'setting',
       render: (record) => {
-        return <Button type="primary" size="small" onClick={() => dispatch({ type: 'product/showSet', obj: record })}>添加</Button>
+        return <Button type="primary" size="small" onClick={() => dispatch({ type: 'product/showSet', obj: { editType: 'add', ...record } })}>添加</Button>
       },
     },
   ]

@@ -8,7 +8,7 @@ import { mock, fakeNet } from '../mock/setting.js'
 
 axios.defaults.baseURL = baseURL
 axios.defaults.withCredentials = true
-axios.defaults.timeout = 6000
+axios.defaults.timeout = 3000
 
 const fetch = (options) => {
   let {
